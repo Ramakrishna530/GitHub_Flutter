@@ -24,11 +24,13 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
   String? _selectedLanguage;
   List<String> _repositories = [];
 
-  void _didSelect(String item) {
+  void _didSelect({required String item}) {
     setState(() {
       _selectedLanguage = item;
-      _repositories =
-          List<String>.generate(100, (index) => "Repo ${index + 1}");
+      _repositories = List<String>.generate(
+        100,
+        (index) => "Repo ${index + 1}",
+      );
     });
   }
 
@@ -43,7 +45,7 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
             children: [
               DropDown(
                 items: _languages,
-                didSelectItemHandler: _didSelect,
+                didSelect: _didSelect,
                 dropdownValue: _selectedLanguage,
               ),
               Expanded(
