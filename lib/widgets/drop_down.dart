@@ -6,11 +6,12 @@ class DropDown extends StatelessWidget {
   final List<String> items;
   final Function didSelectItemHandler;
 
-  const DropDown(
-      {required this.items,
-      required this.didSelectItemHandler,
-      this.dropdownValue,
-      super.key});
+  const DropDown({
+    required this.items,
+    required this.didSelectItemHandler,
+    this.dropdownValue,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) => Container(
@@ -45,7 +46,7 @@ class DropDown extends StatelessWidget {
               .toList(),
           value: dropdownValue,
           onChanged: (value) async {
-            didSelectItemHandler(value);
+            didSelectItemHandler(value!);
           },
         ),
       );

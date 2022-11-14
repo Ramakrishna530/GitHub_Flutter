@@ -10,7 +10,7 @@ class RepositoriesScreen extends StatefulWidget {
 }
 
 class _RepositoriesScreenState extends State<RepositoriesScreen> {
-  final List<String> _languages = [
+  final _languages = const <String>[
     "Dart",
     "Java",
     "JavaScript",
@@ -22,12 +22,13 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
     "TypeScript",
   ];
   String? _selectedLanguage;
-  List<String> repositories = [];
+  List<String> _repositories = [];
 
-  void _didSelectItem(String item) {
+  void _didSelect(String item) {
     setState(() {
       _selectedLanguage = item;
-      repositories = List<String>.generate(100, (index) => "Repo ${index + 1}");
+      _repositories =
+          List<String>.generate(100, (index) => "Repo ${index + 1}");
     });
   }
 
@@ -36,22 +37,22 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
         appBar: AppBar(
           title: const Text("Repositories"),
         ),
-        body: Container(
-          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
           child: Column(
             children: [
               DropDown(
                 items: _languages,
-                didSelectItemHandler: _didSelectItem,
+                didSelectItemHandler: _didSelect,
                 dropdownValue: _selectedLanguage,
               ),
               Expanded(
-                child: repositories.isNotEmpty
+                child: _repositories.isNotEmpty
                     ? ListView.builder(
                         shrinkWrap: true,
-                        itemCount: repositories.length,
+                        itemCount: _repositories.length,
                         itemBuilder: (context, index) => ListTile(
-                          title: Text(repositories[index]),
+                          title: Text(_repositories[index]),
                         ),
                       )
                     : const Center(
