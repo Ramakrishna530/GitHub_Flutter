@@ -1,42 +1,51 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
-class DropDown extends StatefulWidget {
-  List<String> items;
+class DropDown extends StatelessWidget {
+  final String? dropdownValue;
+  final List<String> items;
+  final void Function({required String item}) didSelect;
 
-  DropDown(this.items, {super.key});
+  const DropDown({
+    required this.items,
+    required this.didSelect,
+    this.dropdownValue,
+    super.key,
+  });
 
-  @override
-  State<DropDown> createState() => _DropDownState();
-}
-
-class _DropDownState extends State<DropDown> {
-  String dropdownValue = "swift";
   @override
   Widget build(BuildContext context) => DropdownButton2(
-        isExpanded: true,
-        hint: Text(
-          'Select Item',
-          style: TextStyle(
-            fontSize: 14,
-            color: Theme.of(context).hintColor,
-          ),
+      isExpanded: true,
+      buttonPadding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      buttonDecoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.secondary,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: Colors.white,
+          width: 1,
         ),
-        items: widget.items
-            .map((item) => DropdownMenuItem<String>(
-                  value: item,
-                  child: Text(
-                    item,
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.normal),
-                  ),
-                ))
-            .toList(),
-        value: dropdownValue,
-        onChanged: (value) {
-          setState(() {
-            dropdownValue = value as String;
-          });
-        },
-      );
+      ),
+      hint: Text(
+        "Select Language",
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Theme.of(context).hintColor,
+        ),
+      ),
+      items: items
+          .map((item) => DropdownMenuItem<String>(
+                value: item,
+                child: Text(
+                  item,
+                  style: Theme.of(context).textTheme.headline6,
+                ),
+              ))
+          .toList(),
+      value: dropdownValue,
+      onChanged: (value) {
+        if (value != null) {
+          didSelect(item: value);
+        }
+      });
 }
