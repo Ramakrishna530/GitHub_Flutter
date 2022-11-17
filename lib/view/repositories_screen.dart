@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../core/http/api_response.dart';
-import '../models/get_repositories/repository_rto.dart';
 import '../view_model/repositories_view_model.dart';
-import 'widget/app_error_widget.dart';
 import 'widget/drop_down.dart';
-import 'widget/loading_widget.dart';
-import 'widget/repository_item_widget.dart';
+import 'widget/repositories_widget.dart';
 
 class RepositoriesScreen extends StatefulWidget {
-  static const routeName = "repositories_screen";
   const RepositoriesScreen({super.key});
+  static const routeName = "repositories_screen";
 
   @override
   State<RepositoriesScreen> createState() => _RepositoriesScreenState();
@@ -32,13 +27,6 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
   ];
   late String _selectedLanguage;
 
-  void _didSelect({required String item}) {
-    setState(() {
-      _selectedLanguage = item;
-      viewModel.getRepositories(_selectedLanguage);
-    });
-  }
-
   @override
   void initState() {
     _selectedLanguage = _languages[0];
@@ -46,14 +34,12 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
     super.initState();
   }
 
-  Widget _getRepositoriesListView(List<RepositoryRTO> repositories) =>
-      ListView.builder(
-        scrollDirection: Axis.vertical,
-        shrinkWrap: true,
-        itemCount: repositories.length,
-        itemBuilder: (context, index) =>
-            RepositoryItemWidget(repositories[index]),
-      );
+  void _didSelect({required String item}) {
+    setState(() {
+      _selectedLanguage = item;
+      viewModel.getRepositories(_selectedLanguage);
+    });
+  }
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -73,20 +59,8 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
                 height: 10,
               ),
               Expanded(
-                child: ChangeNotifierProvider<RepositoriesViewModel>(
-                  create: (BuildContext context) => viewModel,
-                  child: Consumer<RepositoriesViewModel>(
-                      builder: (context, viewModel, _) {
-                    switch (viewModel.repositories.status!) {
-                      case ApiStatus.loading:
-                        return const LoadingWidget();
-                      case ApiStatus.error:
-                        return AppErrorWidget(viewModel.repositories.message!);
-                      case ApiStatus.completed:
-                        return _getRepositoriesListView(
-                            viewModel.repositories.data!);
-                    }
-                  }),
+                child: RepositoriesWidget(
+                  viewModel: viewModel,
                 ),
               ),
             ],

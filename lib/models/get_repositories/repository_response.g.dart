@@ -1,27 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'repository_rto.dart';
+part of 'repository_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-RepositoryRTO _$RepositoryRTOFromJson(Map<String, dynamic> json) =>
-    RepositoryRTO(
+RepositoryResponse _$RepositoryResponseFromJson(Map<String, dynamic> json) =>
+    RepositoryResponse(
       id: json['id'] as int,
       name: json['name'] as String,
       fullName: json['full_name'] as String,
       private: json['private'] as bool,
-      owner: RepositoryOwnerRTO.fromJson(json['owner'] as Map<String, dynamic>),
+      owner: RepositoryOwnerResponse.fromJson(
+          json['owner'] as Map<String, dynamic>),
       watchersCount: json['watchers_count'] as int,
+      score: (json['score'] as num).toDouble(),
       license: json['license'] == null
           ? null
-          : RepositoryLicenseRTO.fromJson(
+          : RepositoryLicenseResponse.fromJson(
               json['license'] as Map<String, dynamic>),
-      score: (json['score'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$RepositoryRTOToJson(RepositoryRTO instance) =>
+Map<String, dynamic> _$RepositoryResponseToJson(RepositoryResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,

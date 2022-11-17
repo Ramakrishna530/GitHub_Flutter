@@ -1,10 +1,10 @@
 import '../core/http/http_service.dart';
-import '../models/get_repositories/repos_result_rto.dart';
-import '../models/get_repositories/repository_rto.dart';
+import '../models/get_repositories/repositories_response.dart';
+import '../models/get_repositories/repository_response.dart';
 import 'service_constants.dart';
 
 abstract class GetRepositoriesRepo {
-  Future<List<RepositoryRTO>> getRepositories(String language);
+  Future<List<RepositoryResponse>> getRepositories(String language);
 }
 
 class GetRepositoriesRepoImpl implements GetRepositoriesRepo {
@@ -12,19 +12,14 @@ class GetRepositoriesRepoImpl implements GetRepositoriesRepo {
   GetRepositoriesRepoImpl();
 
   @override
-  Future<List<RepositoryRTO>> getRepositories(String language) async {
-    try {
-      final uri = createUri(language);
-      final response =
-          await httpService.getResponse(uri) as Map<String, dynamic>;
-      final reposResult = ReposResultRTO.fromJson(response);
-      return reposResult.items;
-    } on Exception catch (_) {
-      rethrow;
-    }
+  Future<List<RepositoryResponse>> getRepositories(String language) async {
+    final uri = _createUri(language);
+    final response = await httpService.getResponse(uri) as Map<String, dynamic>;
+    final reposResult = RepositoriesResponse.fromJson(response);
+    return reposResult.items;
   }
 
-  Uri createUri(String language) =>
+  Uri _createUri(String language) =>
       Uri.parse("$baseURL/search/repositories?q=language:$language&sort"
           "=stars&order=desc");
 }

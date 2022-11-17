@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 
-import '../../models/get_repositories/repository_rto.dart';
-
 class RepositoryItemWidget extends StatelessWidget {
-  final RepositoryRTO repositoryRTO;
-  const RepositoryItemWidget(this.repositoryRTO, {super.key});
+  const RepositoryItemWidget({
+    required this.name,
+    required this.avatarUrl,
+    required this.watchersCount,
+    super.key,
+  });
 
-  void didSelect() {
-    print("Selected item: ${repositoryRTO.name}");
-  }
+  final String name;
+  final String avatarUrl;
+  final int watchersCount;
+
+  void _didSelect() {}
 
   @override
   Widget build(BuildContext context) => ListTile(
-        onTap: didSelect,
+        onTap: _didSelect,
         leading: CircleAvatar(
-          backgroundImage: NetworkImage(repositoryRTO.owner.avatarUrl),
+          backgroundImage: NetworkImage(avatarUrl),
           onBackgroundImageError: (error, stackTrance) =>
               const AssetImage("assets/images/img_error.png"),
         ),
-        title: Text(repositoryRTO.name),
-        subtitle: Text("Watchers Count - ${repositoryRTO.watchersCount}"),
+        title: Text(name),
+        subtitle: Text("Watchers Count - $watchersCount"),
       );
 }

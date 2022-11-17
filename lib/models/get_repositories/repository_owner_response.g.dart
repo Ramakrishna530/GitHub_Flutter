@@ -1,17 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'repository_owner_rto.dart';
+part of 'repository_owner_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-RepositoryOwnerRTO _$RepositoryOwnerRTOFromJson(Map<String, dynamic> json) =>
-    RepositoryOwnerRTO(
+RepositoryOwnerResponse _$RepositoryOwnerResponseFromJson(
+        Map<String, dynamic> json) =>
+    RepositoryOwnerResponse(
       avatarUrl: json['avatar_url'] as String,
     );
 
-Map<String, dynamic> _$RepositoryOwnerRTOToJson(RepositoryOwnerRTO instance) =>
+Map<String, dynamic> _$RepositoryOwnerResponseToJson(
+        RepositoryOwnerResponse instance) =>
     <String, dynamic>{
       'avatar_url': instance.avatarUrl,
     };

@@ -5,11 +5,11 @@ enum ApiStatus {
 }
 
 class ApiResponse<T> {
-  ApiStatus? status;
+  ApiStatus status;
   T? data;
   String? message;
 
-  ApiResponse(this.status, this.data, this.message);
+  ApiResponse({required this.status, this.data, this.message});
 
   ApiResponse.loading() : status = ApiStatus.loading;
 

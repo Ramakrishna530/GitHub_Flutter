@@ -1,19 +1,19 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'repository_license_rto.dart';
+part of 'repository_license_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-RepositoryLicenseRTO _$RepositoryLicenseRTOFromJson(
+RepositoryLicenseResponse _$RepositoryLicenseResponseFromJson(
         Map<String, dynamic> json) =>
-    RepositoryLicenseRTO(
+    RepositoryLicenseResponse(
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$RepositoryLicenseRTOToJson(
-        RepositoryLicenseRTO instance) =>
+Map<String, dynamic> _$RepositoryLicenseResponseToJson(
+        RepositoryLicenseResponse instance) =>
     <String, dynamic>{
       'name': instance.name,
     };

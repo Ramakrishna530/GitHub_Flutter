@@ -22,6 +22,11 @@ class UnauthorisedException extends AppException {
       : super(message, "Unauthorised Request: ");
 }
 
+class ResourceNotFoundException extends AppException {
+  ResourceNotFoundException([String? message])
+      : super(message, "Resource Not Found: ");
+}
+
 class InvalidInputException extends AppException {
   InvalidInputException([String? message]) : super(message, "Invalid Input: ");
 }

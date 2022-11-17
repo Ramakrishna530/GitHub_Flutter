@@ -1,19 +1,21 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'repos_result_rto.dart';
+part of 'repositories_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ReposResultRTO _$ReposResultRTOFromJson(Map<String, dynamic> json) =>
-    ReposResultRTO(
+RepositoriesResponse _$RepositoriesResponseFromJson(
+        Map<String, dynamic> json) =>
+    RepositoriesResponse(
       items: (json['items'] as List<dynamic>)
-          .map((e) => RepositoryRTO.fromJson(e as Map<String, dynamic>))
+          .map((e) => RepositoryResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
-Map<String, dynamic> _$ReposResultRTOToJson(ReposResultRTO instance) =>
+Map<String, dynamic> _$RepositoriesResponseToJson(
+        RepositoriesResponse instance) =>
     <String, dynamic>{
       'items': instance.items,
     };
