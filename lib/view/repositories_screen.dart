@@ -34,17 +34,18 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
   void initState() {
     super.initState();
     _selectedLanguage = _languages[0];
-  }
-
-  @override
-  void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
-    super.didChangeDependencies();
-    widget.repositoriesProvider.getRepositories(_selectedLanguage);
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        widget.repositoriesProvider.getRepositories(_selectedLanguage);
+      },
+    );
   }
 
   void _didSelect({required String item}) {
-    _selectedLanguage = item;
+    setState(() {
+      _selectedLanguage = item;
+    });
     widget.repositoriesProvider.getRepositories(_selectedLanguage);
   }
 
