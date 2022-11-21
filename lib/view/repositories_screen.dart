@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../widgets/drop_down.dart';
+import '../provider/repositories_provider.dart';
+import 'widget/drop_down.dart';
+import 'widget/repositories_widget.dart';
 
 class RepositoriesScreen extends StatefulWidget {
-  const RepositoriesScreen({super.key});
+  const RepositoriesScreen({
+    super.key,
+  });
+  static const routeName = "repositories_screen";
 
   @override
   State<RepositoriesScreen> createState() => _RepositoriesScreenState();
@@ -21,17 +27,29 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
     "Swift",
     "TypeScript",
   ];
-  String? _selectedLanguage;
-  List<String> _repositories = [];
+  late String _selectedLanguage;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedLanguage = _languages[0];
+    Future.delayed(
+      const Duration(seconds: 1),
+      () {
+        context
+            .read<RepositoriesProviderImpl>()
+            .getRepositories(language: _selectedLanguage);
+      },
+    );
+  }
 
   void _didSelect({required String item}) {
     setState(() {
       _selectedLanguage = item;
-      _repositories = List<String>.generate(
-        100,
-        (index) => "Repo ${index + 1}",
-      );
     });
+    context
+        .read<RepositoriesProviderImpl>()
+        .getRepositories(language: _selectedLanguage);
   }
 
   @override
@@ -48,18 +66,11 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
                 didSelect: _didSelect,
                 dropdownValue: _selectedLanguage,
               ),
-              Expanded(
-                child: _repositories.isNotEmpty
-                    ? ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: _repositories.length,
-                        itemBuilder: (context, index) => ListTile(
-                          title: Text(_repositories[index]),
-                        ),
-                      )
-                    : const Center(
-                        child: Text("No Records Found"),
-                      ),
+              const SizedBox(
+                height: 10,
+              ),
+              const Expanded(
+                child: RepositoriesWidget(),
               ),
             ],
           ),
