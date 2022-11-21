@@ -8,8 +8,9 @@ abstract class GetRepositoriesRepo {
 }
 
 class GetRepositoriesRepoImpl implements GetRepositoriesRepo {
-  HttpService httpService = HttpServiceImpl();
-  GetRepositoriesRepoImpl();
+  GetRepositoriesRepoImpl({HttpService? httpService})
+      : httpService = httpService ?? HttpServiceImpl();
+  final HttpService httpService;
 
   @override
   Future<List<RepositoryResponse>> getRepositories(String language) async {

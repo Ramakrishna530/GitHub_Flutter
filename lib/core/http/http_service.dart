@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'http_exception.dart';
 
 abstract class HttpService {
-  Future<dynamic> getResponse(Uri uri);
+  Future<Object> getResponse(Uri uri);
 }
 
 class HttpServiceImpl implements HttpService {

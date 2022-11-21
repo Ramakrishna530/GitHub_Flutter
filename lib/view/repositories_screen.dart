@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../view_model/repositories_view_model.dart';
+import '../provider/repositories_provider.dart';
 import 'widget/drop_down.dart';
 import 'widget/repositories_widget.dart';
 
 class RepositoriesScreen extends StatefulWidget {
-  const RepositoriesScreen({super.key});
+  const RepositoriesScreen({
+    required this.repositoriesProvider,
+    super.key,
+  });
+  final RepositoriesProvider repositoriesProvider;
   static const routeName = "repositories_screen";
 
   @override
@@ -13,7 +17,6 @@ class RepositoriesScreen extends StatefulWidget {
 }
 
 class _RepositoriesScreenState extends State<RepositoriesScreen> {
-  final RepositoriesViewModel viewModel = RepositoriesViewModel();
   final _languages = const <String>[
     "Dart",
     "Java",
@@ -29,16 +32,20 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
 
   @override
   void initState() {
-    _selectedLanguage = _languages[0];
-    viewModel.getRepositories(_selectedLanguage);
     super.initState();
+    _selectedLanguage = _languages[0];
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+    widget.repositoriesProvider.getRepositories(_selectedLanguage);
   }
 
   void _didSelect({required String item}) {
-    setState(() {
-      _selectedLanguage = item;
-      viewModel.getRepositories(_selectedLanguage);
-    });
+    _selectedLanguage = item;
+    widget.repositoriesProvider.getRepositories(_selectedLanguage);
   }
 
   @override
@@ -58,10 +65,8 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
               const SizedBox(
                 height: 10,
               ),
-              Expanded(
-                child: RepositoriesWidget(
-                  viewModel: viewModel,
-                ),
+              const Expanded(
+                child: RepositoriesWidget(),
               ),
             ],
           ),
