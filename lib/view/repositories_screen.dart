@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../provider/repositories_provider.dart';
 import 'widget/drop_down.dart';
@@ -6,10 +7,8 @@ import 'widget/repositories_widget.dart';
 
 class RepositoriesScreen extends StatefulWidget {
   const RepositoriesScreen({
-    required this.repositoriesProvider,
     super.key,
   });
-  final RepositoriesProvider repositoriesProvider;
   static const routeName = "repositories_screen";
 
   @override
@@ -37,7 +36,9 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
     Future.delayed(
       const Duration(seconds: 1),
       () {
-        widget.repositoriesProvider.getRepositories(_selectedLanguage);
+        context
+            .read<RepositoriesProviderImpl>()
+            .getRepositories(language: _selectedLanguage);
       },
     );
   }
@@ -46,7 +47,9 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
     setState(() {
       _selectedLanguage = item;
     });
-    widget.repositoriesProvider.getRepositories(_selectedLanguage);
+    context
+        .read<RepositoriesProviderImpl>()
+        .getRepositories(language: _selectedLanguage);
   }
 
   @override

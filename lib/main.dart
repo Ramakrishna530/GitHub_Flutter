@@ -48,10 +48,8 @@ class MyApp extends StatelessWidget {
           ),
           initialRoute: RepositoriesScreen.routeName,
           routes: {
-            RepositoriesScreen.routeName: (context) => RepositoriesScreen(
-                  repositoriesProvider:
-                      context.read<RepositoriesProviderImpl>(),
-                ),
+            RepositoriesScreen.routeName: (context) =>
+                const RepositoriesScreen(),
           },
         ),
       );

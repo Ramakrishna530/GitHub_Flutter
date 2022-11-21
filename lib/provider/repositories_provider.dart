@@ -5,7 +5,7 @@ import '../models/get_repositories/repository_response.dart';
 import '../repository/get_repositories_repo.dart';
 
 abstract class RepositoriesProvider {
-  Future<void> getRepositories(String language);
+  Future<void> getRepositories({required String language});
 }
 
 class RepositoriesProviderImpl extends ChangeNotifier
@@ -18,10 +18,11 @@ class RepositoriesProviderImpl extends ChangeNotifier
   ApiResponse<List<RepositoryResponse>> _repositories = ApiResponse.loading();
 
   @override
-  Future<void> getRepositories(String language) async {
+  Future<void> getRepositories({required String language}) async {
     _setRepositoriesState(ApiResponse.loading());
     try {
-      final response = await getRepositoriesRepo.getRepositories(language);
+      final response =
+          await getRepositoriesRepo.getRepositories(language: language);
       _setRepositoriesState(ApiResponse.completed(response));
     } on Exception catch (error) {
       _setRepositoriesState(ApiResponse.error(error.toString()));
