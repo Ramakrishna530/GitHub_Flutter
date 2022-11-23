@@ -16,6 +16,7 @@ class RepositoryItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
+        key: Key(name),
         onTap: _didSelect,
         leading: CircleAvatar(
           backgroundImage: NetworkImage(avatarUrl),

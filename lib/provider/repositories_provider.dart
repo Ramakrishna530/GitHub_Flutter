@@ -4,12 +4,7 @@ import '../core/http/api_response.dart';
 import '../models/get_repositories/repository_response.dart';
 import '../repository/get_repositories_repo.dart';
 
-abstract class RepositoriesProvider {
-  Future<void> getRepositories({required String language});
-}
-
-class RepositoriesProviderImpl extends ChangeNotifier
-    implements RepositoriesProvider {
+class RepositoriesProviderImpl extends ChangeNotifier {
   RepositoriesProviderImpl({GetRepositoriesRepo? getRepositoriesRepo})
       : getRepositoriesRepo = getRepositoriesRepo ?? GetRepositoriesRepoImpl();
   GetRepositoriesRepo getRepositoriesRepo;
@@ -17,7 +12,6 @@ class RepositoriesProviderImpl extends ChangeNotifier
 
   ApiResponse<List<RepositoryResponse>> _repositories = ApiResponse.loading();
 
-  @override
   Future<void> getRepositories({required String language}) async {
     _setRepositoriesState(ApiResponse.loading());
     try {

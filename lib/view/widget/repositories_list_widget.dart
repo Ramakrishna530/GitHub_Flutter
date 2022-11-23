@@ -8,8 +8,8 @@ import 'app_error_widget.dart';
 import 'loading_widget.dart';
 import 'repository_item_widget.dart';
 
-class RepositoriesWidget extends StatelessWidget {
-  const RepositoriesWidget({
+class RepositoriesListWidget extends StatelessWidget {
+  const RepositoriesListWidget({
     super.key,
   });
 

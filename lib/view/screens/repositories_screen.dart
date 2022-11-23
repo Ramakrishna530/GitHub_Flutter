@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/repositories_provider.dart';
-import 'widget/drop_down.dart';
-import 'widget/repositories_widget.dart';
+import '../../provider/repositories_provider.dart';
+import '../widget/drop_down.dart';
+import '../widget/repositories_list_widget.dart';
+
+class Repositories extends StatelessWidget {
+  const Repositories({super.key});
+  static const routeName = "/repositories";
+
+  @override
+  Widget build(BuildContext context) => ChangeNotifierProvider.value(
+        value: RepositoriesProviderImpl(),
+        child: const RepositoriesScreen(),
+      );
+}
 
 class RepositoriesScreen extends StatefulWidget {
-  const RepositoriesScreen({
-    super.key,
-  });
-  static const routeName = "repositories_screen";
+  const RepositoriesScreen({super.key});
 
   @override
   State<RepositoriesScreen> createState() => _RepositoriesScreenState();
@@ -70,7 +78,7 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
                 height: 10,
               ),
               const Expanded(
-                child: RepositoriesWidget(),
+                child: RepositoriesListWidget(),
               ),
             ],
           ),
