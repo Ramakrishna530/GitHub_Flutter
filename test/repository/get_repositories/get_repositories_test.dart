@@ -5,7 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:git_hub/core/http/http_exception.dart';
 import 'package:git_hub/core/http/http_service.dart';
 import 'package:git_hub/models/get_repositories/repository_response.dart';
-import 'package:git_hub/repository/get_repositories_repo.dart';
+import 'package:git_hub/repository/get_repositories/get_repositories.dart';
 import 'package:git_hub/repository/service_constants.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

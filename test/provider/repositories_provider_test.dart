@@ -7,7 +7,7 @@ import 'package:git_hub/core/http/http_exception.dart';
 import 'package:git_hub/models/get_repositories/repositories_response.dart';
 import 'package:git_hub/models/get_repositories/repository_response.dart';
 import 'package:git_hub/provider/repositories_provider.dart';
-import 'package:git_hub/repository/get_repositories_repo.dart';
+import 'package:git_hub/repository/get_repositories/get_repositories_interface.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'view/screens/repositories_screen.dart';
+import 'view/screens/repositories.dart';
 
 void main() {
   runApp(const MyApp());

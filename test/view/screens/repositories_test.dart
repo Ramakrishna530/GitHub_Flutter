@@ -4,13 +4,13 @@ import 'package:git_hub/core/http/http_exception.dart';
 import 'package:git_hub/models/get_repositories/repository_owner_response.dart';
 import 'package:git_hub/models/get_repositories/repository_response.dart';
 import 'package:git_hub/provider/repositories_provider.dart';
-import 'package:git_hub/repository/get_repositories_repo.dart';
-import 'package:git_hub/view/screens/repositories_screen.dart';
+import 'package:git_hub/repository/get_repositories/get_repositories_interface.dart';
+import 'package:git_hub/view/screens/repositories.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 
-import 'repositories_screen_test.mocks.dart';
+import '../../provider/repositories_provider_test.mocks.dart';
 
 @GenerateMocks([GetRepositoriesRepo])
 void main() {

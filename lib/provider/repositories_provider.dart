@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../core/http/api_response.dart';
 import '../models/get_repositories/repository_response.dart';
-import '../repository/get_repositories_repo.dart';
+import '../repository/get_repositories/get_repositories.dart';
+import '../repository/get_repositories/get_repositories_interface.dart';
 
 class RepositoriesProviderImpl extends ChangeNotifier {
   RepositoriesProviderImpl({GetRepositoriesRepo? getRepositoriesRepo})
