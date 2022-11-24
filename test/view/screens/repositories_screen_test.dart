@@ -6,6 +6,7 @@ import 'package:git_hub/models/get_repositories/repository_response.dart';
 import 'package:git_hub/provider/repositories_provider.dart';
 import 'package:git_hub/repository/get_repositories_repo.dart';
 import 'package:git_hub/view/screens/repositories_screen.dart';
+import 'package:git_hub/view/widget/drop_down.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
@@ -74,9 +75,36 @@ void main() {
           .thenThrow(FetchDataException("No Internet Connection"));
       await tester.pumpWidget(createMaterialApp());
       expect(find.text("Loading..."), findsOneWidget);
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+      await tester.pumpAndSettle(const Duration(milliseconds: 1));
       expect(find.text("Error During Communication: No Internet Connection"),
           findsOneWidget);
+    });
+
+    testWidgets("When language selected then show the repositories",
+        (tester) async {
+      const language = "Swift";
+      final mockRepositoriesResponse = getRepositoriesResponse();
+      when(mockGetRepositoriesRepo.getRepositories(language: "Dart"))
+          .thenAnswer((_) => Future.value(mockRepositoriesResponse));
+      await tester.pumpWidget(createMaterialApp());
+      expect(find.text("Loading..."), findsOneWidget);
+      await tester.pumpAndSettle(const Duration(milliseconds: 1));
+      when(mockGetRepositoriesRepo.getRepositories(language: language))
+          .thenAnswer((_) => Future.value(mockRepositoriesResponse));
+      final dropdown = find.byType(DropDown).first;
+      await tester.tap(dropdown);
+      await tester.pump();
+      final menuItem = find.text(language).last;
+      await tester.tap(menuItem);
+      await tester.pumpAndSettle(const Duration(milliseconds: 1));
+      for (final repositoryResponse in mockRepositoriesResponse) {
+        expect(find.text(repositoryResponse.name), findsOneWidget);
+        expect(
+            find.text("Watchers Count - ${repositoryResponse.watchersCount}"),
+            findsOneWidget);
+        expect(find.byType(CircleAvatar),
+            findsNWidgets(mockRepositoriesResponse.length));
+      }
     });
   });
 }
