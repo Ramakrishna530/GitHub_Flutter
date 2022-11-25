@@ -21,7 +21,9 @@ void main() {
 
     setUp(() {
       mockGetRepositoriesRepo = MockGetRepositoriesRepo();
-      repositoriesProvider = RepositoriesProviderImpl(getRepositoriesRepo: mockGetRepositoriesRepo);
+      repositoriesProvider = RepositoriesProviderImpl(
+        getRepositoriesRepo: mockGetRepositoriesRepo,
+      );
     });
 
     Widget createMaterialApp() => MaterialApp(
@@ -34,15 +36,18 @@ void main() {
     List<RepositoryResponse> getRepositoriesResponse({int repositoriesCount = 5}) {
       final repositories = <RepositoryResponse>[];
       for (var i = 1; i < repositoriesCount; i++) {
-        final repositoryOwnerResponse = RepositoryOwnerResponse(avatarUrl: "avatarUrl-$i");
+        final repositoryOwnerResponse = RepositoryOwnerResponse(
+          avatarUrl: "avatarUrl-$i",
+        );
         final repositoryResponse = RepositoryResponse(
-            id: i,
-            name: "name-$i",
-            fullName: "fullName-$i",
-            private: false,
-            owner: repositoryOwnerResponse,
-            watchersCount: i,
-            score: i.toDouble());
+          id: i,
+          name: "name-$i",
+          fullName: "fullName-$i",
+          private: false,
+          owner: repositoryOwnerResponse,
+          watchersCount: i,
+          score: i.toDouble(),
+        );
         repositories.add(repositoryResponse);
       }
       return repositories;
@@ -50,47 +55,100 @@ void main() {
 
     testWidgets("When get repositories is success then shows the list", (tester) async {
       final mockRepositoriesResponse = getRepositoriesResponse();
-      when(mockGetRepositoriesRepo.getRepositories(language: "Dart"))
-          .thenAnswer((_) => Future.value(mockRepositoriesResponse));
-      await tester.pumpWidget(createMaterialApp());
+      when(
+        mockGetRepositoriesRepo.getRepositories(language: "Dart"),
+      ).thenAnswer(
+        (_) => Future.value(mockRepositoriesResponse),
+      );
+      await tester.pumpWidget(
+        createMaterialApp(),
+      );
       expect(find.text("Loading..."), findsOneWidget);
-      await tester.pumpAndSettle(const Duration(milliseconds: 1));
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 1),
+      );
       for (final repositoryResponse in mockRepositoriesResponse) {
-        expect(find.text(repositoryResponse.name), findsOneWidget);
-        expect(find.text("Watchers Count - ${repositoryResponse.watchersCount}"), findsOneWidget);
-        expect(find.byType(CircleAvatar), findsNWidgets(mockRepositoriesResponse.length));
+        expect(
+          find.text(repositoryResponse.name),
+          findsOneWidget,
+        );
+        expect(
+          find.text("Watchers Count - ${repositoryResponse.watchersCount}"),
+          findsOneWidget,
+        );
+        expect(
+          find.byType(CircleAvatar),
+          findsNWidgets(mockRepositoriesResponse.length),
+        );
       }
     });
 
     testWidgets("When get repositories is failure then shows the error message", (tester) async {
-      when(mockGetRepositoriesRepo.getRepositories(language: "Dart"))
-          .thenThrow(FetchDataException("No Internet Connection"));
-      await tester.pumpWidget(createMaterialApp());
-      expect(find.text("Loading..."), findsOneWidget);
-      await tester.pumpAndSettle(const Duration(milliseconds: 1));
-      expect(find.text("Error During Communication: No Internet Connection"), findsOneWidget);
+      when(
+        mockGetRepositoriesRepo.getRepositories(language: "Dart"),
+      ).thenThrow(
+        FetchDataException("No Internet Connection"),
+      );
+      await tester.pumpWidget(
+        createMaterialApp(),
+      );
+      expect(
+        find.text("Loading..."),
+        findsOneWidget,
+      );
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 1),
+      );
+      expect(
+        find.text("Error During Communication: No Internet Connection"),
+        findsOneWidget,
+      );
     });
 
     testWidgets("When language selected then show the repositories", (tester) async {
       const language = "Swift";
       final mockRepositoriesResponse = getRepositoriesResponse();
-      when(mockGetRepositoriesRepo.getRepositories(language: "Dart"))
-          .thenAnswer((_) => Future.value(mockRepositoriesResponse));
-      await tester.pumpWidget(createMaterialApp());
-      expect(find.text("Loading..."), findsOneWidget);
-      await tester.pumpAndSettle(const Duration(milliseconds: 1));
-      when(mockGetRepositoriesRepo.getRepositories(language: language))
-          .thenAnswer((_) => Future.value(mockRepositoriesResponse));
+      when(
+        mockGetRepositoriesRepo.getRepositories(language: "Dart"),
+      ).thenAnswer(
+        (_) => Future.value(mockRepositoriesResponse),
+      );
+      await tester.pumpWidget(
+        createMaterialApp(),
+      );
+      expect(
+        find.text("Loading..."),
+        findsOneWidget,
+      );
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 1),
+      );
+      when(
+        mockGetRepositoriesRepo.getRepositories(language: language),
+      ).thenAnswer(
+        (_) => Future.value(mockRepositoriesResponse),
+      );
       final dropdown = find.byType(DropDown).first;
       await tester.tap(dropdown);
       await tester.pump();
       final menuItem = find.text(language).last;
       await tester.tap(menuItem);
-      await tester.pumpAndSettle(const Duration(milliseconds: 1));
+      await tester.pumpAndSettle(
+        const Duration(milliseconds: 1),
+      );
       for (final repositoryResponse in mockRepositoriesResponse) {
-        expect(find.text(repositoryResponse.name), findsOneWidget);
-        expect(find.text("Watchers Count - ${repositoryResponse.watchersCount}"), findsOneWidget);
-        expect(find.byType(CircleAvatar), findsNWidgets(mockRepositoriesResponse.length));
+        expect(
+          find.text(repositoryResponse.name),
+          findsOneWidget,
+        );
+        expect(
+          find.text("Watchers Count - ${repositoryResponse.watchersCount}"),
+          findsOneWidget,
+        );
+        expect(
+          find.byType(CircleAvatar),
+          findsNWidgets(mockRepositoriesResponse.length),
+        );
       }
     });
   });

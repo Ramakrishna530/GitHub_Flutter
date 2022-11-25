@@ -27,6 +27,10 @@ void main() {
           ),
         );
 
+    tearDown(
+      () => selectedItem = null,
+    );
+
     testWidgets("When no drop down item selected then show \"Select Language\"", (tester) async {
       final dropdownWidget = createMaterialApp(
         DropDown(items: languages, didSelect: didSelect),
@@ -44,8 +48,14 @@ void main() {
         ),
       );
       await tester.pumpWidget(dropdownWidget);
-      expect(find.byKey(ValueKey(languages[0])), findsOneWidget);
-      expect(find.text(languages[0]), findsOneWidget);
+      expect(
+        find.byKey(ValueKey(languages[0])),
+        findsOneWidget,
+      );
+      expect(
+        find.text(languages[0]),
+        findsOneWidget,
+      );
     });
 
     testWidgets("When tap on dropdown then show the dropdown menu items", (tester) async {
@@ -62,7 +72,10 @@ void main() {
       );
       await tester.tap(dropdown);
       for (final item in languages) {
-        expect(find.text(item), findsOneWidget);
+        expect(
+          find.text(item),
+          findsOneWidget,
+        );
       }
     });
 
@@ -86,7 +99,10 @@ void main() {
         final menuItem = find.text(item).last;
         await tester.tap(menuItem);
         await tester.pumpAndSettle();
-        expect(selectedItem, item);
+        expect(
+          selectedItem,
+          item,
+        );
       }
     });
   });
