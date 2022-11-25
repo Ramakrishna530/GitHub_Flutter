@@ -27,8 +27,7 @@ class RepositoryResponse {
   final RepositoryLicenseResponse? license;
   final double score;
 
-  factory RepositoryResponse.fromJson(Map<String, dynamic> data) =>
-      _$RepositoryResponseFromJson(data);
+  factory RepositoryResponse.fromJson(Map<String, dynamic> data) => _$RepositoryResponseFromJson(data);
 
   Map<String, dynamic> toJson() => _$RepositoryResponseToJson(this);
 }

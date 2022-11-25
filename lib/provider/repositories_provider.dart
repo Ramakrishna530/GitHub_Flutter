@@ -8,6 +8,7 @@ class RepositoriesProviderImpl extends ChangeNotifier {
   RepositoriesProviderImpl({GetRepositoriesRepo? getRepositoriesRepo})
       : getRepositoriesRepo = getRepositoriesRepo ?? GetRepositoriesRepoImpl();
   GetRepositoriesRepo getRepositoriesRepo;
+
   ApiResponse<List<RepositoryResponse>> get repositories => _repositories;
 
   ApiResponse<List<RepositoryResponse>> _repositories = ApiResponse.loading();
@@ -15,8 +16,7 @@ class RepositoriesProviderImpl extends ChangeNotifier {
   Future<void> getRepositories({required String language}) async {
     _setRepositoriesState(ApiResponse.loading());
     try {
-      final response =
-          await getRepositoriesRepo.getRepositories(language: language);
+      final response = await getRepositoriesRepo.getRepositories(language: language);
       _setRepositoriesState(ApiResponse.completed(response));
     } on Exception catch (error) {
       _setRepositoriesState(ApiResponse.error(error.toString()));

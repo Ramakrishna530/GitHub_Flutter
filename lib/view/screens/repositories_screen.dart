@@ -7,6 +7,7 @@ import '../widget/repositories_list_widget.dart';
 
 class Repositories extends StatelessWidget {
   const Repositories({super.key});
+
   static const routeName = "/repositories";
 
   @override
@@ -44,9 +45,7 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
     Future.delayed(
       const Duration(seconds: 1),
       () {
-        context
-            .read<RepositoriesProviderImpl>()
-            .getRepositories(language: _selectedLanguage);
+        context.read<RepositoriesProviderImpl>().getRepositories(language: _selectedLanguage);
       },
     );
   }
@@ -55,9 +54,7 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
     setState(() {
       _selectedLanguage = item;
     });
-    context
-        .read<RepositoriesProviderImpl>()
-        .getRepositories(language: _selectedLanguage);
+    context.read<RepositoriesProviderImpl>().getRepositories(language: _selectedLanguage);
   }
 
   @override

@@ -27,8 +27,7 @@ void main() {
           ),
         );
 
-    testWidgets("When no drop down item selected then show \"Select Language\"",
-        (tester) async {
+    testWidgets("When no drop down item selected then show \"Select Language\"", (tester) async {
       final dropdownWidget = createMaterialApp(
         DropDown(items: languages, didSelect: didSelect),
       );
@@ -36,8 +35,7 @@ void main() {
       expect(find.text("Select Language"), findsOneWidget);
     });
 
-    testWidgets("When item selected then show the selected item",
-        (tester) async {
+    testWidgets("When item selected then show the selected item", (tester) async {
       final dropdownWidget = createMaterialApp(
         DropDown(
           items: languages,
@@ -50,8 +48,7 @@ void main() {
       expect(find.text(languages[0]), findsOneWidget);
     });
 
-    testWidgets("When tap on dropdown then show the dropdown menu items",
-        (tester) async {
+    testWidgets("When tap on dropdown then show the dropdown menu items", (tester) async {
       final dropdownWidget = createMaterialApp(
         DropDown(
           items: languages,

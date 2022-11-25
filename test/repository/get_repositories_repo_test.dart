@@ -21,14 +21,12 @@ Future<void> main() async {
       "=stars&order=desc");
   setUp(() {
     httpServiceTest = MockHttpService();
-    getRepositoriesRepoImpl =
-        GetRepositoriesRepoImpl(httpService: httpServiceTest);
+    getRepositoriesRepoImpl = GetRepositoriesRepoImpl(httpService: httpServiceTest);
   });
 
   Object getMockRepositoriesJson() {
     final file = File('test_resources/repositories.json');
-    final jsonObject =
-        jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+    final jsonObject = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
     return jsonObject;
   }
 
@@ -36,10 +34,8 @@ Future<void> main() async {
     late List<RepositoryResponse>? repositories;
     setUp(() async {
       final repositoriesJson = getMockRepositoriesJson();
-      when(httpServiceTest.getResponse(uri))
-          .thenAnswer((_) async => repositoriesJson);
-      repositories =
-          await getRepositoriesRepoImpl.getRepositories(language: language);
+      when(httpServiceTest.getResponse(uri)).thenAnswer((_) async => repositoriesJson);
+      repositories = await getRepositoriesRepoImpl.getRepositories(language: language);
     });
     test('then returns the list of repositories', () async {
       expect(repositories?.length, 30);
@@ -53,8 +49,7 @@ Future<void> main() async {
     });
 
     test('then throws the correct exception', () async {
-      expect(() => getRepositoriesRepoImpl.getRepositories(language: language),
-          throwsA(isA<FetchDataException>()));
+      expect(() => getRepositoriesRepoImpl.getRepositories(language: language), throwsA(isA<FetchDataException>()));
     });
   });
 }

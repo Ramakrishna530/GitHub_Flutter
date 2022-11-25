@@ -21,8 +21,7 @@ void main() {
 
     setUp(() {
       mockGetRepositoriesRepo = MockGetRepositoriesRepo();
-      repositoriesProvider = RepositoriesProviderImpl(
-          getRepositoriesRepo: mockGetRepositoriesRepo);
+      repositoriesProvider = RepositoriesProviderImpl(getRepositoriesRepo: mockGetRepositoriesRepo);
     });
 
     Widget createMaterialApp() => MaterialApp(
@@ -32,12 +31,10 @@ void main() {
           ),
         );
 
-    List<RepositoryResponse> getRepositoriesResponse(
-        {int repositoriesCount = 5}) {
+    List<RepositoryResponse> getRepositoriesResponse({int repositoriesCount = 5}) {
       final repositories = <RepositoryResponse>[];
       for (var i = 1; i < repositoriesCount; i++) {
-        final repositoryOwnerResponse =
-            RepositoryOwnerResponse(avatarUrl: "avatarUrl-$i");
+        final repositoryOwnerResponse = RepositoryOwnerResponse(avatarUrl: "avatarUrl-$i");
         final repositoryResponse = RepositoryResponse(
             id: i,
             name: "name-$i",
@@ -51,8 +48,7 @@ void main() {
       return repositories;
     }
 
-    testWidgets("When get repositories is success then shows the list",
-        (tester) async {
+    testWidgets("When get repositories is success then shows the list", (tester) async {
       final mockRepositoriesResponse = getRepositoriesResponse();
       when(mockGetRepositoriesRepo.getRepositories(language: "Dart"))
           .thenAnswer((_) => Future.value(mockRepositoriesResponse));
@@ -61,27 +57,21 @@ void main() {
       await tester.pumpAndSettle(const Duration(milliseconds: 1));
       for (final repositoryResponse in mockRepositoriesResponse) {
         expect(find.text(repositoryResponse.name), findsOneWidget);
-        expect(
-            find.text("Watchers Count - ${repositoryResponse.watchersCount}"),
-            findsOneWidget);
-        expect(find.byType(CircleAvatar),
-            findsNWidgets(mockRepositoriesResponse.length));
+        expect(find.text("Watchers Count - ${repositoryResponse.watchersCount}"), findsOneWidget);
+        expect(find.byType(CircleAvatar), findsNWidgets(mockRepositoriesResponse.length));
       }
     });
 
-    testWidgets("When get repositories is failure then shows the error message",
-        (tester) async {
+    testWidgets("When get repositories is failure then shows the error message", (tester) async {
       when(mockGetRepositoriesRepo.getRepositories(language: "Dart"))
           .thenThrow(FetchDataException("No Internet Connection"));
       await tester.pumpWidget(createMaterialApp());
       expect(find.text("Loading..."), findsOneWidget);
       await tester.pumpAndSettle(const Duration(milliseconds: 1));
-      expect(find.text("Error During Communication: No Internet Connection"),
-          findsOneWidget);
+      expect(find.text("Error During Communication: No Internet Connection"), findsOneWidget);
     });
 
-    testWidgets("When language selected then show the repositories",
-        (tester) async {
+    testWidgets("When language selected then show the repositories", (tester) async {
       const language = "Swift";
       final mockRepositoriesResponse = getRepositoriesResponse();
       when(mockGetRepositoriesRepo.getRepositories(language: "Dart"))
@@ -99,11 +89,8 @@ void main() {
       await tester.pumpAndSettle(const Duration(milliseconds: 1));
       for (final repositoryResponse in mockRepositoriesResponse) {
         expect(find.text(repositoryResponse.name), findsOneWidget);
-        expect(
-            find.text("Watchers Count - ${repositoryResponse.watchersCount}"),
-            findsOneWidget);
-        expect(find.byType(CircleAvatar),
-            findsNWidgets(mockRepositoriesResponse.length));
+        expect(find.text("Watchers Count - ${repositoryResponse.watchersCount}"), findsOneWidget);
+        expect(find.byType(CircleAvatar), findsNWidgets(mockRepositoriesResponse.length));
       }
     });
   });

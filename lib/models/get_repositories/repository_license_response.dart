@@ -10,8 +10,7 @@ class RepositoryLicenseResponse {
 
   final String name;
 
-  factory RepositoryLicenseResponse.fromJson(Map<String, dynamic> data) =>
-      _$RepositoryLicenseResponseFromJson(data);
+  factory RepositoryLicenseResponse.fromJson(Map<String, dynamic> data) => _$RepositoryLicenseResponseFromJson(data);
 
   Map<String, dynamic> toJson() => _$RepositoryLicenseResponseToJson(this);
 }

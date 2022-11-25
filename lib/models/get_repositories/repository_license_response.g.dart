@@ -6,14 +6,10 @@ part of 'repository_license_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-RepositoryLicenseResponse _$RepositoryLicenseResponseFromJson(
-        Map<String, dynamic> json) =>
-    RepositoryLicenseResponse(
+RepositoryLicenseResponse _$RepositoryLicenseResponseFromJson(Map<String, dynamic> json) => RepositoryLicenseResponse(
       name: json['name'] as String,
     );
 
-Map<String, dynamic> _$RepositoryLicenseResponseToJson(
-        RepositoryLicenseResponse instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$RepositoryLicenseResponseToJson(RepositoryLicenseResponse instance) => <String, dynamic>{
       'name': instance.name,
     };

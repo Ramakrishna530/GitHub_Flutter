@@ -21,14 +21,12 @@ void main() async {
     const language = "Dart";
     setUp(() {
       mockGetRepositoriesRepo = MockGetRepositoriesRepo();
-      repositoriesProviderImpl = RepositoriesProviderImpl(
-          getRepositoriesRepo: mockGetRepositoriesRepo);
+      repositoriesProviderImpl = RepositoriesProviderImpl(getRepositoriesRepo: mockGetRepositoriesRepo);
     });
 
     List<RepositoryResponse> getMockRepositories() {
       final file = File('test_resources/repositories.json');
-      final jsonObject =
-          jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
+      final jsonObject = jsonDecode(file.readAsStringSync()) as Map<String, dynamic>;
       final repositoriesResult = RepositoriesResponse.fromJson(jsonObject);
       return repositoriesResult.items;
     }
@@ -57,8 +55,7 @@ void main() async {
       test('then returns the correct error message', () async {
         final repositories = repositoriesProviderImpl.repositories;
         expect(repositories.status, ApiStatus.error);
-        expect(repositories.message,
-            "Error During Communication: No Internet Connection");
+        expect(repositories.message, "Error During Communication: No Internet Connection");
       });
     });
   });

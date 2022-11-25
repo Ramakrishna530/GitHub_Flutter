@@ -10,8 +10,7 @@ class RepositoryOwnerResponse {
 
   final String avatarUrl;
 
-  factory RepositoryOwnerResponse.fromJson(Map<String, dynamic> data) =>
-      _$RepositoryOwnerResponseFromJson(data);
+  factory RepositoryOwnerResponse.fromJson(Map<String, dynamic> data) => _$RepositoryOwnerResponseFromJson(data);
 
   Map<String, dynamic>? toJson() => _$RepositoryOwnerResponseToJson(this);
 }
