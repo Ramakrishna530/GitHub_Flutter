@@ -16,24 +16,19 @@ void main() {
       "TypeScript",
     ];
 
-    String? selectedItem;
-    void didSelect({required String item}) {
-      selectedItem = item;
-    }
-
     Widget createMaterialApp(Widget child) => MaterialApp(
           home: Scaffold(
             body: child,
           ),
         );
 
-    tearDown(
-      () => selectedItem = null,
-    );
-
     testWidgets("When no drop down item selected then show \"Select Language\"", (tester) async {
       final dropdownWidget = createMaterialApp(
-        DropDown(items: languages, didSelect: didSelect),
+        DropDown(
+            items: languages,
+            didSelect: ({
+              required String item,
+            }) {}),
       );
       await tester.pumpWidget(dropdownWidget);
       expect(find.text("Select Language"), findsOneWidget);
@@ -43,7 +38,9 @@ void main() {
       final dropdownWidget = createMaterialApp(
         DropDown(
           items: languages,
-          didSelect: didSelect,
+          didSelect: ({
+            required String item,
+          }) {},
           dropdownValue: languages[0],
         ),
       );
@@ -62,7 +59,9 @@ void main() {
       final dropdownWidget = createMaterialApp(
         DropDown(
           items: languages,
-          didSelect: didSelect,
+          didSelect: ({
+            required String item,
+          }) {},
           key: const Key("dropdown"),
         ),
       );
@@ -82,6 +81,11 @@ void main() {
     testWidgets(
         "When tap on dropdown menu item then pass the menu item in the "
         "callback", (tester) async {
+      String? selectedItem;
+      void didSelect({required String item}) {
+        selectedItem = item;
+      }
+
       final dropdownWidget = createMaterialApp(
         DropDown(
           items: languages,
