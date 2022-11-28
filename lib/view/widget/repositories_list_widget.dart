@@ -26,7 +26,7 @@ class RepositoriesListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repositoriesProvider = context.watch<RepositoriesProviderImpl>();
+    final repositoriesProvider = context.watch<RepositoriesProvider>();
     switch (repositoriesProvider.repositories.status) {
       case ApiStatus.loading:
         return const LoadingWidget();

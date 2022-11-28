@@ -4,15 +4,25 @@ import '../core/http/api_response.dart';
 import '../models/get_repositories/repository_response.dart';
 import '../repository/get_repositories_repo.dart';
 
-class RepositoriesProviderImpl extends ChangeNotifier {
-  RepositoriesProviderImpl({GetRepositoriesRepo? getRepositoriesRepo})
-      : getRepositoriesRepo = getRepositoriesRepo ?? GetRepositoriesRepoImpl();
+abstract class RepositoriesProvider implements Listenable {
+  Future<void> getRepositories({
+    required String language,
+  });
+  ApiResponse<List<RepositoryResponse>> get repositories;
+}
+
+class RepositoriesProviderImpl extends ChangeNotifier implements RepositoriesProvider {
+  RepositoriesProviderImpl({
+    GetRepositoriesRepo? getRepositoriesRepo,
+  }) : getRepositoriesRepo = getRepositoriesRepo ?? GetRepositoriesRepoImpl();
   GetRepositoriesRepo getRepositoriesRepo;
 
+  @override
   ApiResponse<List<RepositoryResponse>> get repositories => _repositories;
 
   ApiResponse<List<RepositoryResponse>> _repositories = ApiResponse.loading();
 
+  @override
   Future<void> getRepositories({required String language}) async {
     _setRepositoriesState(ApiResponse.loading());
     try {
