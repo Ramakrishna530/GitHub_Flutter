@@ -1,42 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:git_hub/core/http/http_exception.dart';
+import 'package:git_hub/core/http/api_response.dart';
 import 'package:git_hub/models/get_repositories/repository_owner_response.dart';
 import 'package:git_hub/models/get_repositories/repository_response.dart';
 import 'package:git_hub/provider/repositories_provider.dart';
-import 'package:git_hub/repository/get_repositories/get_repositories_interface.dart';
 import 'package:git_hub/view/screens/repositories.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/repositories_provider_test.mocks.dart';
+import 'repositories_test.mocks.dart';
 
-@GenerateMocks([GetRepositoriesRepo])
+@GenerateMocks([RepositoriesProvider])
 void main() {
   group("$RepositoriesScreen", () {
-    late RepositoriesProviderImpl repositoriesProvider;
-    late MockGetRepositoriesRepo mockGetRepositoriesRepo;
+    late MockRepositoriesProvider repositoriesProvider;
 
     setUp(() {
-      mockGetRepositoriesRepo = MockGetRepositoriesRepo();
-      repositoriesProvider = RepositoriesProviderImpl(
-          getRepositoriesRepo: mockGetRepositoriesRepo);
+      repositoriesProvider = MockRepositoriesProvider();
     });
 
     Widget createMaterialApp() => MaterialApp(
-          home: ChangeNotifierProvider.value(
+          home: ListenableProvider<RepositoriesProvider>.value(
             value: repositoriesProvider,
             child: const RepositoriesScreen(),
           ),
         );
 
-    List<RepositoryResponse> getRepositoriesResponse(
-        {int repositoriesCount = 5}) {
+    List<RepositoryResponse> getRepositoriesResponse({int repositoriesCount = 5}) {
       final repositories = <RepositoryResponse>[];
       for (var i = 1; i < repositoriesCount; i++) {
-        final repositoryOwnerResponse =
-            RepositoryOwnerResponse(avatarUrl: "avatarUrl-$i");
+        final repositoryOwnerResponse = RepositoryOwnerResponse(avatarUrl: "avatarUrl-$i");
         final repositoryResponse = RepositoryResponse(
             id: i,
             name: "name-$i",
@@ -50,33 +44,51 @@ void main() {
       return repositories;
     }
 
-    testWidgets("When get repositories is success then shows the list",
-        (tester) async {
+    testWidgets("When get repositories is success then shows the list", (tester) async {
       final mockRepositoriesResponse = getRepositoriesResponse();
-      when(mockGetRepositoriesRepo.getRepositories(language: "Dart"))
-          .thenAnswer((_) => Future.value(mockRepositoriesResponse));
+      when(
+        repositoriesProvider.getRepositories(language: "Dart"),
+      ).thenAnswer(
+        (_) => Future.value(),
+      );
+      when(
+        repositoriesProvider.repositories,
+      ).thenReturn(
+        ApiResponse.completed(mockRepositoriesResponse),
+      );
       await tester.pumpWidget(createMaterialApp());
-      expect(find.text("Loading..."), findsOneWidget);
-      await tester.pumpAndSettle(const Duration(milliseconds: 1));
+      await tester.pumpAndSettle(const Duration(seconds: 1));
       for (final repositoryResponse in mockRepositoriesResponse) {
-        expect(find.text(repositoryResponse.name), findsOneWidget);
         expect(
-            find.text("Watchers Count - ${repositoryResponse.watchersCount}"),
-            findsOneWidget);
-        expect(find.byType(CircleAvatar),
-            findsNWidgets(mockRepositoriesResponse.length));
+          find.text(repositoryResponse.name),
+          findsOneWidget,
+        );
+        expect(
+          find.text("Watchers Count - ${repositoryResponse.watchersCount}"),
+          findsOneWidget,
+        );
+        expect(
+          find.byType(CircleAvatar),
+          findsNWidgets(mockRepositoriesResponse.length),
+        );
       }
     });
 
-    testWidgets("When get repositories is failure then shows the error message",
-        (tester) async {
-      when(mockGetRepositoriesRepo.getRepositories(language: "Dart"))
-          .thenThrow(FetchDataException("No Internet Connection"));
+    testWidgets("When get repositories is failure then shows the error message", (tester) async {
+      when(
+        repositoriesProvider.getRepositories(language: "Dart"),
+      ).thenAnswer(
+        (_) => Future.value(),
+      );
+      when(repositoriesProvider.repositories).thenReturn(
+        ApiResponse.error("No Internet Connection"),
+      );
       await tester.pumpWidget(createMaterialApp());
-      expect(find.text("Loading..."), findsOneWidget);
       await tester.pumpAndSettle(const Duration(seconds: 1));
-      expect(find.text("Error During Communication: No Internet Connection"),
-          findsOneWidget);
+      expect(
+        find.text("No Internet Connection"),
+        findsOneWidget,
+      );
     });
   });
 }

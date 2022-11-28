@@ -13,8 +13,7 @@ class RepositoriesListWidget extends StatelessWidget {
     super.key,
   });
 
-  Widget _getRepositoriesListView(List<RepositoryResponse> repositories) =>
-      ListView.builder(
+  Widget _getRepositoriesListView(List<RepositoryResponse> repositories) => ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: repositories.length,
@@ -27,7 +26,7 @@ class RepositoriesListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repositoriesProvider = context.watch<RepositoriesProviderImpl>();
+    final repositoriesProvider = context.watch<RepositoriesProvider>();
     switch (repositoriesProvider.repositories.status) {
       case ApiStatus.loading:
         return const LoadingWidget();

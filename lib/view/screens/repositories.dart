@@ -10,7 +10,7 @@ class Repositories extends StatelessWidget {
   static const routeName = "/repositories";
 
   @override
-  Widget build(BuildContext context) => ChangeNotifierProvider.value(
+  Widget build(BuildContext context) => ListenableProvider<RepositoriesProvider>.value(
         value: RepositoriesProviderImpl(),
         child: const RepositoriesScreen(),
       );
@@ -44,9 +44,7 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
     Future.delayed(
       const Duration(seconds: 1),
       () {
-        context
-            .read<RepositoriesProviderImpl>()
-            .getRepositories(language: _selectedLanguage);
+        context.read<RepositoriesProvider>().getRepositories(language: _selectedLanguage);
       },
     );
   }
@@ -55,9 +53,7 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
     setState(() {
       _selectedLanguage = item;
     });
-    context
-        .read<RepositoriesProviderImpl>()
-        .getRepositories(language: _selectedLanguage);
+    context.read<RepositoriesProvider>().getRepositories(language: _selectedLanguage);
   }
 
   @override

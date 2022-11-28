@@ -3,12 +3,13 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i3;
+import 'dart:async' as _i5;
+import 'dart:ui' as _i6;
 
+import 'package:git_hub/core/http/api_response.dart' as _i2;
 import 'package:git_hub/models/get_repositories/repository_response.dart'
     as _i4;
-import 'package:git_hub/repository/get_repositories/get_repositories_interface.dart'
-    as _i2;
+import 'package:git_hub/provider/repositories_provider.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint
@@ -22,25 +23,60 @@ import 'package:mockito/mockito.dart' as _i1;
 // ignore_for_file: camel_case_types
 // ignore_for_file: subtype_of_sealed_class
 
-/// A class which mocks [GetRepositoriesRepo].
+class _FakeApiResponse_0<T> extends _i1.SmartFake
+    implements _i2.ApiResponse<T> {
+  _FakeApiResponse_0(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
+/// A class which mocks [RepositoriesProvider].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockGetRepositoriesRepo extends _i1.Mock
-    implements _i2.GetRepositoriesRepo {
-  MockGetRepositoriesRepo() {
+class MockRepositoriesProvider extends _i1.Mock
+    implements _i3.RepositoriesProvider {
+  MockRepositoriesProvider() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i3.Future<List<_i4.RepositoryResponse>> getRepositories(
-          {required String? language}) =>
+  _i2.ApiResponse<List<_i4.RepositoryResponse>> get repositories =>
+      (super.noSuchMethod(
+        Invocation.getter(#repositories),
+        returnValue: _FakeApiResponse_0<List<_i4.RepositoryResponse>>(
+          this,
+          Invocation.getter(#repositories),
+        ),
+      ) as _i2.ApiResponse<List<_i4.RepositoryResponse>>);
+  @override
+  _i5.Future<void> getRepositories({required String? language}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getRepositories,
           [],
           {#language: language},
         ),
-        returnValue: _i3.Future<List<_i4.RepositoryResponse>>.value(
-            <_i4.RepositoryResponse>[]),
-      ) as _i3.Future<List<_i4.RepositoryResponse>>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+  @override
+  void addListener(_i6.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+  @override
+  void removeListener(_i6.VoidCallback? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
 }
