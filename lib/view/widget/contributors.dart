@@ -6,6 +6,7 @@ import '../../core/http/api_response.dart';
 import '../../provider/contributor.dart';
 import '../../provider/contributors_provider.dart';
 import 'app_error_widget.dart';
+import 'contributor_item_widget.dart';
 import 'loading_widget.dart';
 
 class ContributorsWidget extends StatefulWidget {
@@ -34,31 +35,21 @@ class _ContributorsWidgetState extends State<ContributorsWidget> {
   }) =>
       CarouselSlider(
         options: CarouselOptions(
-          autoPlay: false,
+          autoPlay: true,
           enlargeCenterPage: true,
           pageSnapping: true,
-          onPageChanged: (position, reason) {
-            print(reason);
-            print(CarouselPageChangedReason.controller);
-          },
+          onPageChanged: (position, reason) {},
           enableInfiniteScroll: true,
         ),
         items: contributors
             .map<Widget>(
               (contributor) => Builder(
-                builder: (BuildContext context) => Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.purple),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(10),
-                    ),
-                    image: DecorationImage(
-                      image: NetworkImage(contributor.avatarUrl),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                builder: (BuildContext context) => ContributorItem(
+                    id: contributor.id,
+                    name: contributor.name ?? "${contributor.id}",
+                    avatarUrl: contributor.avatarUrl,
+                    contributionsCount: contributor.contributionsCount,
+                    followers: contributor.followers),
               ),
             )
             .toList(),

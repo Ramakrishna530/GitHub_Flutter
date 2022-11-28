@@ -32,6 +32,7 @@ class RepositoriesProviderImpl extends ChangeNotifier implements RepositoriesPro
       final response = await getRepositoriesRepo.getRepositories(language: language);
       _setRepositoriesState(ApiResponse.completed(response));
     } on Exception catch (error) {
+      print("Error = $error");
       _setRepositoriesState(ApiResponse.error(error.toString()));
     }
   }
