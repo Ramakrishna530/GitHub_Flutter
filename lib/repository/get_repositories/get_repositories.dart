@@ -5,20 +5,17 @@ import '../service_constants.dart';
 import 'get_repositories_interface.dart';
 
 class GetRepositoriesRepoImpl implements GetRepositoriesRepo {
-  GetRepositoriesRepoImpl({HttpService? httpService})
-      : httpService = httpService ?? HttpServiceImpl();
+  GetRepositoriesRepoImpl({HttpService? httpService}) : httpService = httpService ?? HttpServiceImpl();
   final HttpService httpService;
 
   @override
-  Future<List<RepositoryResponse>> getRepositories(
-      {required String language}) async {
+  Future<List<RepositoryResponse>> getRepositories({required String language}) async {
     final uri = _createUri(language);
     final response = await httpService.getResponse(uri) as Map<String, dynamic>;
     final reposResult = RepositoriesResponse.fromJson(response);
     return reposResult.items;
   }
 
-  Uri _createUri(String language) =>
-      Uri.parse("$baseURL/search/repositories?q=language:$language&sort"
-          "=stars&order=desc");
+  Uri _createUri(String language) => Uri.parse("$baseURL/search/repositories?q=language:$language&sort"
+      "=stars&order=desc");
 }

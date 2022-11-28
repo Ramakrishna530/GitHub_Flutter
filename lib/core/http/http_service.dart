@@ -32,8 +32,7 @@ class HttpServiceImpl implements HttpService {
       case 404:
         throw ResourceNotFoundException(response.body.toString());
       default:
-        throw FetchDataException(
-            'Error occurred while communication with server'
+        throw FetchDataException('Error occurred while communication with server'
             ' with status code : ${response.statusCode}');
     }
   }

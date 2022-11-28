@@ -12,8 +12,7 @@ class RepositoriesResponse {
 
   final List<RepositoryResponse> items;
 
-  factory RepositoriesResponse.fromJson(Map<String, dynamic> data) =>
-      _$RepositoriesResponseFromJson(data);
+  factory RepositoriesResponse.fromJson(Map<String, dynamic> data) => _$RepositoriesResponseFromJson(data);
 
   Map<String, dynamic> toJson() => _$RepositoriesResponseToJson(this);
 }

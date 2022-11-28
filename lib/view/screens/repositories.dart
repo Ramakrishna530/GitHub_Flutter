@@ -7,6 +7,7 @@ import '../widget/repositories_list_widget.dart';
 
 class Repositories extends StatelessWidget {
   const Repositories({super.key});
+
   static const routeName = "/repositories";
 
   @override
