@@ -15,7 +15,6 @@ class ContributorsRepositoryImpl implements ContributorsRepository {
     final response = await httpService.getResponse(uri) as List<dynamic>;
     final contributorsResponseMap = List<Map<String, dynamic>>.from(response);
     final contributorsResponse = contributorsResponseMap.map(ContributorResponse.fromJson).toList();
-    print(contributorsResponse);
     return contributorsResponse;
   }
 

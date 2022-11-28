@@ -41,8 +41,9 @@ class ContributorsProviderImpl extends ChangeNotifier implements ContributorsPro
   }
 
   Future<void> _getContributorsDetails(List<ContributorResponse> contributorsResponse) async {
-    final userDetailsFutures = contributorsResponse
-        .map((contributorResponse) => userDetailsRepository.getUserDetails(contributorResponse.url));
+    final userDetailsFutures = contributorsResponse.map(
+      (contributorResponse) => userDetailsRepository.getUserDetails(contributorResponse.url),
+    );
     final results = await Future.wait(userDetailsFutures);
     final contributors = _createContributors(results, contributorsResponse);
     _setContributorsState(state: ApiResponse.completed(contributors));

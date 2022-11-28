@@ -16,14 +16,19 @@ class RepositoryDetails extends StatelessWidget {
 }
 
 class RepositoryDetailsScreen extends StatelessWidget {
-  const RepositoryDetailsScreen({
-    super.key,
-  });
+  const RepositoryDetailsScreen({super.key});
 
+  Text _createTextWidget({required String text, required BuildContext context}) => Text(
+        text,
+        textAlign: TextAlign.left,
+        style: Theme.of(context).textTheme.bodyText1,
+      );
   @override
   Widget build(BuildContext context) {
     final repositoryID = ModalRoute.of(context)?.settings.arguments as int;
-    final repositoryResponse = context.read<RepositoriesProvider>().getRepositoryResponseBy(id: repositoryID)!;
+    final repositoryResponse = context.read<RepositoriesProvider>().getRepositoryResponseBy(
+          id: repositoryID,
+        )!;
     final appBar = AppBar(
       title: Text(repositoryResponse.name),
     );
@@ -32,42 +37,40 @@ class RepositoryDetailsScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-              child: Column(
-                children: [
-                  Image(
-                    image: NetworkImage(repositoryResponse.owner.avatarUrl),
-                    width: double.infinity,
-                    height: 200,
-                    fit: BoxFit.cover,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Watchers Count: ${repositoryResponse.watchersCount}",
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                      Text(
-                        "Public: ${!repositoryResponse.private}",
-                        textAlign: TextAlign.left,
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ],
-                  ),
-                  const Text(
-                    "Contributors",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
+            Image(
+              image: NetworkImage(repositoryResponse.owner.avatarUrl),
+              width: double.infinity,
+              height: 200,
+              fit: BoxFit.cover,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _createTextWidget(
+                  text: "Watchers Count: ${repositoryResponse.watchersCount}",
+                  context: context,
+                ),
+                _createTextWidget(
+                  text: "Public: ${!repositoryResponse.private}",
+                  context: context,
+                ),
+              ],
+            ),
+            const Text(
+              "Contributors",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
               ),
+            ),
+            const SizedBox(
+              height: 10,
             ),
             Expanded(
               child: DecoratedBox(
