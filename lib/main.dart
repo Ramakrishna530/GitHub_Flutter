@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'view/screens/repositories.dart';
+import 'view/screens/repository_details.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         initialRoute: Repositories.routeName,
         routes: {
           Repositories.routeName: (context) => const Repositories(),
+          RepositoryDetails.routeName: (context) => const RepositoryDetails(),
         },
       );
 }

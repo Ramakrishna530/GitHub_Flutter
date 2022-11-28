@@ -18,6 +18,7 @@ class RepositoriesListWidget extends StatelessWidget {
         shrinkWrap: true,
         itemCount: repositories.length,
         itemBuilder: (context, index) => RepositoryItemWidget(
+          id: repositories[index].id,
           name: repositories[index].name,
           avatarUrl: repositories[index].owner.avatarUrl,
           watchersCount: repositories[index].watchersCount,

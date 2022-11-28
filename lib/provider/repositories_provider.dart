@@ -10,6 +10,8 @@ abstract class RepositoriesProvider implements Listenable {
     required String language,
   });
   ApiResponse<List<RepositoryResponse>> get repositories;
+
+  RepositoryResponse? getRepositoryResponseBy({required int id});
 }
 
 class RepositoriesProviderImpl extends ChangeNotifier implements RepositoriesProvider {
@@ -38,4 +40,8 @@ class RepositoriesProviderImpl extends ChangeNotifier implements RepositoriesPro
     _repositories = response;
     notifyListeners();
   }
+
+  @override
+  RepositoryResponse? getRepositoryResponseBy({required int id}) =>
+      _repositories.data?.firstWhere((repository) => repository.id == id);
 }
