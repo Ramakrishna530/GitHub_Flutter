@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../provider/repositories_provider.dart';
 import '../screens/repository_details.dart';
 
 class RepositoryItemWidget extends StatelessWidget {
@@ -19,11 +17,10 @@ class RepositoryItemWidget extends StatelessWidget {
   final int watchersCount;
 
   void _didSelect(BuildContext context) {
-    final repositoryResponse = context.read<RepositoriesProvider>().getRepositoryResponseBy(id: id);
     Navigator.pushNamed(
       context,
       RepositoryDetails.routeName,
-      arguments: repositoryResponse,
+      arguments: id,
     );
   }
 

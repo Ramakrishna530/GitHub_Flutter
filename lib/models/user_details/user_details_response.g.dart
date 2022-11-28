@@ -8,6 +8,7 @@ part of 'user_details_response.dart';
 
 UserDetailsResponse _$UserDetailsResponseFromJson(Map<String, dynamic> json) =>
     UserDetailsResponse(
+      id: json['id'] as int,
       avatarUrl: json['avatar_url'] as String,
       followers: json['followers'] as int,
       name: json['name'] as String?,
@@ -18,6 +19,7 @@ UserDetailsResponse _$UserDetailsResponseFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$UserDetailsResponseToJson(
         UserDetailsResponse instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'avatar_url': instance.avatarUrl,
       'followers': instance.followers,
       'name': instance.name,

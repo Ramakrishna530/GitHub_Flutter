@@ -5,10 +5,12 @@ part 'contributor_response.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class ContributorResponse {
   ContributorResponse({
+    required this.id,
     required this.url,
     required this.contributions,
   });
 
+  final int id;
   final String url;
   final int contributions;
 

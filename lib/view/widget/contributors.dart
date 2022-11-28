@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../core/http/api_response.dart';
-import '../../models/user_details/user_details_response.dart';
+import '../../provider/contributor.dart';
 import '../../provider/contributors_provider.dart';
 import 'app_error_widget.dart';
 import 'loading_widget.dart';
@@ -30,7 +30,7 @@ class _ContributorsWidgetState extends State<ContributorsWidget> {
   }
 
   CarouselSlider _createCarouselSlider({
-    required List<UserDetailsResponse> users,
+    required List<Contributor> contributors,
   }) =>
       CarouselSlider(
         options: CarouselOptions(
@@ -43,9 +43,9 @@ class _ContributorsWidgetState extends State<ContributorsWidget> {
           },
           enableInfiniteScroll: true,
         ),
-        items: users
+        items: contributors
             .map<Widget>(
-              (user) => Builder(
+              (contributor) => Builder(
                 builder: (BuildContext context) => Container(
                   width: MediaQuery.of(context).size.width,
                   decoration: BoxDecoration(
@@ -54,7 +54,7 @@ class _ContributorsWidgetState extends State<ContributorsWidget> {
                       Radius.circular(10),
                     ),
                     image: DecorationImage(
-                      image: NetworkImage(user.avatarUrl),
+                      image: NetworkImage(contributor.avatarUrl),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -73,7 +73,7 @@ class _ContributorsWidgetState extends State<ContributorsWidget> {
       case ApiStatus.error:
         return AppErrorWidget(contributorProvider.contributors.message!);
       case ApiStatus.completed:
-        return _createCarouselSlider(users: contributorProvider.contributors.data!);
+        return _createCarouselSlider(contributors: contributorProvider.contributors.data!);
     }
   }
 }

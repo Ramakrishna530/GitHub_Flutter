@@ -5,6 +5,7 @@ part 'user_details_response.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class UserDetailsResponse {
   UserDetailsResponse({
+    required this.id,
     required this.avatarUrl,
     required this.followers,
     this.name,
@@ -12,6 +13,7 @@ class UserDetailsResponse {
     this.company,
   });
 
+  final int id;
   final String avatarUrl;
   final int followers;
   final String? name;

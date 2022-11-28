@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/get_repositories/repository_response.dart';
 import '../../provider/contributors_provider.dart';
+import '../../provider/repositories_provider.dart';
 import '../widget/contributors.dart';
 
 class RepositoryDetails extends StatelessWidget {
@@ -22,7 +22,9 @@ class RepositoryDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final repositoryResponse = ModalRoute.of(context)?.settings.arguments as RepositoryResponse;
+    final repositoryID = ModalRoute.of(context)?.settings.arguments as int;
+    final repositoryResponse = context.read<RepositoriesProvider>().getRepositoryResponseBy(id: repositoryID)!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(repositoryResponse.name),

@@ -7,10 +7,11 @@ import '../repository/contributors/contributors.dart';
 import '../repository/contributors/contributors_interface.dart';
 import '../repository/user_details/user_details.dart';
 import '../repository/user_details/user_details_interface.dart';
+import 'contributor.dart';
 
 abstract class ContributorsProvider implements Listenable {
   Future<void> getContributorsDetail({required String repositoryFullName});
-  ApiResponse<List<UserDetailsResponse>> get contributors;
+  ApiResponse<List<Contributor>> get contributors;
 }
 
 class ContributorsProviderImpl extends ChangeNotifier implements ContributorsProvider {
@@ -22,9 +23,9 @@ class ContributorsProviderImpl extends ChangeNotifier implements ContributorsPro
   ContributorsRepository contributorsRepository;
   UserDetailsRepository userDetailsRepository;
   @override
-  ApiResponse<List<UserDetailsResponse>> get contributors => _contributors;
+  ApiResponse<List<Contributor>> get contributors => _contributors;
 
-  ApiResponse<List<UserDetailsResponse>> _contributors = ApiResponse.loading();
+  ApiResponse<List<Contributor>> _contributors = ApiResponse.loading();
 
   @override
   Future<void> getContributorsDetail({required String repositoryFullName}) async {
@@ -43,10 +44,33 @@ class ContributorsProviderImpl extends ChangeNotifier implements ContributorsPro
     final userDetailsFutures = contributorsResponse
         .map((contributorResponse) => userDetailsRepository.getUserDetails(contributorResponse.url));
     final results = await Future.wait(userDetailsFutures);
-    _setContributorsState(state: ApiResponse.completed(results));
+    final contributors = _createContributors(results, contributorsResponse);
+    _setContributorsState(state: ApiResponse.completed(contributors));
   }
 
-  void _setContributorsState({required ApiResponse<List<UserDetailsResponse>> state}) {
+  List<Contributor> _createContributors(
+    List<UserDetailsResponse> userDetailsResponse,
+    List<ContributorResponse> contributorsResponse,
+  ) {
+    final contributors = <Contributor>[];
+    userDetailsResponse.forEach((userDetails) {
+      final contributorResponse =
+          contributorsResponse.firstWhere((contributorResponse) => contributorResponse.id == userDetails.id);
+      final contributor = Contributor(
+        id: userDetails.id,
+        contributionsCount: contributorResponse.contributions,
+        avatarUrl: userDetails.avatarUrl,
+        followers: userDetails.followers,
+        name: userDetails.name,
+        bio: userDetails.bio,
+        company: userDetails.company,
+      );
+      contributors.add(contributor);
+    });
+    return contributors;
+  }
+
+  void _setContributorsState({required ApiResponse<List<Contributor>> state}) {
     _contributors = state;
     notifyListeners();
   }
