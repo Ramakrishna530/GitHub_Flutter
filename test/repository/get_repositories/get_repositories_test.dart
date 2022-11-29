@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:git_hub/core/http/http_exception.dart';
 import 'package:git_hub/core/http/http_service.dart';
@@ -10,6 +7,7 @@ import 'package:git_hub/repository/service_constants.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import '../../helpers/mock_json_data.dart';
 import 'get_repositories_test.mocks.dart';
 
 @GenerateMocks([HttpService])
@@ -24,18 +22,12 @@ Future<void> main() async {
     getRepositoriesRepoImpl = GetRepositoriesRepoImpl(httpService: httpServiceTest);
   });
 
-  Object getMockRepositoriesJson() {
-    final file = File('test_resources/repositories.json');
-    final jsonObject = jsonDecode(
-      file.readAsStringSync(),
-    ) as Map<String, dynamic>;
-    return jsonObject;
-  }
-
   group("When the get repositories is success", () {
     late List<RepositoryResponse>? repositories;
     setUp(() async {
-      final repositoriesJson = getMockRepositoriesJson();
+      final repositoriesJson = getMockJson(
+        jsonPath: 'test_resources/repositories.json',
+      ) as Map<String, dynamic>;
       when(
         httpServiceTest.getResponse(uri),
       ).thenAnswer((_) async => repositoriesJson);
@@ -49,28 +41,16 @@ Future<void> main() async {
     });
   });
 
-  group(
-    "When the get repositories is failed with exception",
-    () {
-      setUp(() async {
-        when(
-          httpServiceTest.getResponse(uri),
-        ).thenThrow(
-          FetchDataException(),
-        );
-      });
+  group("When the get repositories is failed with exception", () {
+    setUp(() async {
+      when(httpServiceTest.getResponse(uri)).thenThrow(FetchDataException());
+    });
 
-      test(
-        'then throws the correct exception',
-        () async {
-          expect(
-            () => getRepositoriesRepoImpl.getRepositories(language: language),
-            throwsA(
-              isA<FetchDataException>(),
-            ),
-          );
-        },
+    test('then throws the correct exception', () async {
+      expect(
+        () => getRepositoriesRepoImpl.getRepositories(language: language),
+        throwsA(isA<FetchDataException>()),
       );
-    },
-  );
+    });
+  });
 }
