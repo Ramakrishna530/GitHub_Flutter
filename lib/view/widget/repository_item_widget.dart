@@ -16,11 +16,11 @@ class RepositoryItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
+        key: Key(name),
         onTap: _didSelect,
         leading: CircleAvatar(
           backgroundImage: NetworkImage(avatarUrl),
-          onBackgroundImageError: (error, stackTrance) =>
-              const AssetImage("assets/images/img_error.png"),
+          onBackgroundImageError: (error, stackTrance) => const AssetImage("assets/images/img_error.png"),
         ),
         title: Text(name),
         subtitle: Text("Watchers Count - $watchersCount"),

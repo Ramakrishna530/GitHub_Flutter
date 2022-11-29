@@ -9,8 +9,7 @@ class AppException implements Exception {
 }
 
 class FetchDataException extends AppException {
-  FetchDataException([String? message])
-      : super(message, "Error During Communication: ");
+  FetchDataException([String? message]) : super(message, "Error During Communication: ");
 }
 
 class BadRequestException extends AppException {
@@ -18,13 +17,11 @@ class BadRequestException extends AppException {
 }
 
 class UnauthorisedException extends AppException {
-  UnauthorisedException([String? message])
-      : super(message, "Unauthorised Request: ");
+  UnauthorisedException([String? message]) : super(message, "Unauthorised Request: ");
 }
 
 class ResourceNotFoundException extends AppException {
-  ResourceNotFoundException([String? message])
-      : super(message, "Resource Not Found: ");
+  ResourceNotFoundException([String? message]) : super(message, "Resource Not Found: ");
 }
 
 class InvalidInputException extends AppException {

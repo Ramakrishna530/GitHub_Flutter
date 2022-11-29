@@ -4,15 +4,20 @@ import '../core/http/api_response.dart';
 import '../models/get_repositories/repository_response.dart';
 import '../repository/get_repositories_repo.dart';
 
-abstract class RepositoriesProvider {
-  Future<void> getRepositories({required String language});
+abstract class RepositoriesProvider implements Listenable {
+  Future<void> getRepositories({
+    required String language,
+  });
+  ApiResponse<List<RepositoryResponse>> get repositories;
 }
 
-class RepositoriesProviderImpl extends ChangeNotifier
-    implements RepositoriesProvider {
-  RepositoriesProviderImpl({GetRepositoriesRepo? getRepositoriesRepo})
-      : getRepositoriesRepo = getRepositoriesRepo ?? GetRepositoriesRepoImpl();
+class RepositoriesProviderImpl extends ChangeNotifier implements RepositoriesProvider {
+  RepositoriesProviderImpl({
+    GetRepositoriesRepo? getRepositoriesRepo,
+  }) : getRepositoriesRepo = getRepositoriesRepo ?? GetRepositoriesRepoImpl();
   GetRepositoriesRepo getRepositoriesRepo;
+
+  @override
   ApiResponse<List<RepositoryResponse>> get repositories => _repositories;
 
   ApiResponse<List<RepositoryResponse>> _repositories = ApiResponse.loading();
@@ -21,8 +26,7 @@ class RepositoriesProviderImpl extends ChangeNotifier
   Future<void> getRepositories({required String language}) async {
     _setRepositoriesState(ApiResponse.loading());
     try {
-      final response =
-          await getRepositoriesRepo.getRepositories(language: language);
+      final response = await getRepositoriesRepo.getRepositories(language: language);
       _setRepositoriesState(ApiResponse.completed(response));
     } on Exception catch (error) {
       _setRepositoriesState(ApiResponse.error(error.toString()));
