@@ -5,9 +5,9 @@ import 'package:git_hub/repository/user_details/user_details.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../helpers/mock_json_data.dart';
-import '../get_repositories/get_repositories_test.mocks.dart';
+import '../../mocks/http_service.mocks.dart';
 
-Future<void> main() async {
+void main() {
   late UserDetailsRepositoryImpl userDetailsRepositoryImpl;
   late MockHttpService mockHttpService;
   const url = "https://api.github.com/users/mattt";

@@ -5,9 +5,9 @@ import 'package:git_hub/repository/contributors/contributors.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../helpers/mock_json_data.dart';
-import '../get_repositories/get_repositories_test.mocks.dart';
+import '../../mocks/http_service.mocks.dart';
 
-Future<void> main() async {
+void main() {
   late ContributorsRepositoryImpl contributorsRepositoryImpl;
   late MockHttpService mockHttpService;
   const repositoryFullName = "Alamofire";

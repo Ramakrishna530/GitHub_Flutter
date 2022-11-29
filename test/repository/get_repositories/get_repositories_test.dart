@@ -1,17 +1,14 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:git_hub/core/http/http_exception.dart';
-import 'package:git_hub/core/http/http_service.dart';
 import 'package:git_hub/models/get_repositories/repository_response.dart';
 import 'package:git_hub/repository/get_repositories/get_repositories.dart';
 import 'package:git_hub/repository/service_constants.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../helpers/mock_json_data.dart';
-import 'get_repositories_test.mocks.dart';
+import '../../mocks/http_service.mocks.dart';
 
-@GenerateMocks([HttpService])
-Future<void> main() async {
+void main() {
   late GetRepositoriesRepoImpl getRepositoriesRepoImpl;
   late MockHttpService httpServiceTest;
   const language = "Dart";
