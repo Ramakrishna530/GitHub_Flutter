@@ -7,7 +7,7 @@ class UserDetailsRepositoryImpl implements UserDetailsRepository {
 
   final HttpService httpService;
   @override
-  Future<UserDetailsResponse> getUserDetails(String url) async {
+  Future<UserDetailsResponse> getUserDetails({required String url}) async {
     final uri = Uri.parse(url);
     final response = await httpService.getResponse(uri) as Map<String, dynamic>;
     final userDetailsResponse = UserDetailsResponse.fromJson(response);

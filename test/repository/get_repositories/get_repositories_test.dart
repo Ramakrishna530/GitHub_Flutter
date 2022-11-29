@@ -26,7 +26,7 @@ Future<void> main() async {
     late List<RepositoryResponse>? repositories;
     setUp(() async {
       final repositoriesJson = getMockJson(
-        jsonPath: 'test_resources/repositories.json',
+        jsonPath: JsonFile.repositories.path,
       ) as Map<String, dynamic>;
       when(
         httpServiceTest.getResponse(uri),

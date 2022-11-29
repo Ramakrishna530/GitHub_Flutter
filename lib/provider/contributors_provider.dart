@@ -31,7 +31,9 @@ class ContributorsProviderImpl extends ChangeNotifier implements ContributorsPro
   Future<void> getContributorsDetail({required String repositoryFullName}) async {
     _setContributorsState(state: ApiResponse.loading());
     try {
-      final response = await contributorsRepository.getContributors(repositoryFullName: repositoryFullName);
+      final response = await contributorsRepository.getContributors(
+        repositoryFullName: repositoryFullName,
+      );
       await _getContributorsDetails(response);
     } on Exception catch (error) {
       _setContributorsState(
@@ -40,9 +42,13 @@ class ContributorsProviderImpl extends ChangeNotifier implements ContributorsPro
     }
   }
 
-  Future<void> _getContributorsDetails(List<ContributorResponse> contributorsResponse) async {
+  Future<void> _getContributorsDetails(
+    List<ContributorResponse> contributorsResponse,
+  ) async {
     final userDetailsFutures = contributorsResponse.map(
-      (contributorResponse) => userDetailsRepository.getUserDetails(contributorResponse.url),
+      (contributorResponse) => userDetailsRepository.getUserDetails(
+        url: contributorResponse.url,
+      ),
     );
     final results = await Future.wait(userDetailsFutures);
     final contributors = _createContributors(results, contributorsResponse);
@@ -55,8 +61,9 @@ class ContributorsProviderImpl extends ChangeNotifier implements ContributorsPro
   ) {
     final contributors = <Contributor>[];
     userDetailsResponse.forEach((userDetails) {
-      final contributorResponse =
-          contributorsResponse.firstWhere((contributorResponse) => contributorResponse.id == userDetails.id);
+      final contributorResponse = contributorsResponse.firstWhere(
+        (contributorResponse) => contributorResponse.id == userDetails.id,
+      );
       final contributor = Contributor(
         id: userDetails.id,
         contributionsCount: contributorResponse.contributions,

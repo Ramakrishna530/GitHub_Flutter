@@ -1,15 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:git_hub/core/http/http_exception.dart';
-import 'package:git_hub/core/http/http_service.dart';
 import 'package:git_hub/models/contributors/contributor_response.dart';
 import 'package:git_hub/repository/contributors/contributors.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../helpers/mock_json_data.dart';
-import 'contributors_test.mocks.dart';
+import '../get_repositories/get_repositories_test.mocks.dart';
 
-@GenerateMocks([HttpService])
 Future<void> main() async {
   late ContributorsRepositoryImpl contributorsRepositoryImpl;
   late MockHttpService mockHttpService;
@@ -24,7 +21,7 @@ Future<void> main() async {
     late List<ContributorResponse> contributors;
     setUp(() async {
       final contributorsJson = getMockJson(
-        jsonPath: 'test_resources/contributors.json',
+        jsonPath: JsonFile.contributors.path,
       ) as List<dynamic>;
       when(
         mockHttpService.getResponse(any),
