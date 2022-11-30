@@ -24,6 +24,7 @@ class ContributorItem extends StatelessWidget {
           fontSize: 16.0,
           overflow: TextOverflow.ellipsis,
         ),
+        maxLines: 1,
       );
   @override
   Widget build(BuildContext context) => Container(
@@ -32,17 +33,31 @@ class ContributorItem extends StatelessWidget {
           borderRadius: const BorderRadius.all(Radius.circular(10.0)),
           child: Stack(
             children: <Widget>[
-              Image.network(avatarUrl, fit: BoxFit.cover, width: double.infinity),
+              Image.network(
+                avatarUrl,
+                fit: BoxFit.cover,
+                width: double.infinity,
+                errorBuilder: (context, object, stackTrace) => const Image(
+                  fit: BoxFit.cover,
+                  image: AssetImage("assets/images/img_error.png"),
+                ),
+              ),
               Positioned(
                 bottom: 10.0,
                 left: 10.0,
                 right: 10.0,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     _createTextWidget(text: name),
-                    const Spacer(),
-                    _createTextWidget(text: "Contributions - $contributionsCount"),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: _createTextWidget(text: "Contributions - $contributionsCount"),
+                      ),
+                    ),
                   ],
                 ),
               ),

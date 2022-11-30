@@ -5,13 +5,11 @@ import 'package:git_hub/models/get_repositories/repository_owner_response.dart';
 import 'package:git_hub/models/get_repositories/repository_response.dart';
 import 'package:git_hub/provider/repositories_provider.dart';
 import 'package:git_hub/view/screens/repositories.dart';
-import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:provider/provider.dart';
 
-import 'repositories_test.mocks.dart';
+import '../../mocks/repositories_provider.mocks.dart';
 
-@GenerateMocks([RepositoriesProvider])
 void main() {
   group("$RepositoriesScreen", () {
     late MockRepositoriesProvider repositoriesProvider;
@@ -57,7 +55,7 @@ void main() {
         ApiResponse.completed(mockRepositoriesResponse),
       );
       await tester.pumpWidget(createMaterialApp());
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
       for (final repositoryResponse in mockRepositoriesResponse) {
         expect(
           find.text(repositoryResponse.name),
@@ -77,14 +75,12 @@ void main() {
     testWidgets("When get repositories is failure then shows the error message", (tester) async {
       when(
         repositoriesProvider.getRepositories(language: "Dart"),
-      ).thenAnswer(
-        (_) => Future.value(),
-      );
+      ).thenAnswer((_) => Future.value());
       when(repositoriesProvider.repositories).thenReturn(
         ApiResponse.error("No Internet Connection"),
       );
       await tester.pumpWidget(createMaterialApp());
-      await tester.pumpAndSettle(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
       expect(
         find.text("No Internet Connection"),
         findsOneWidget,

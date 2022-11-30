@@ -21,13 +21,12 @@ class _ContributorsWidgetState extends State<ContributorsWidget> {
   @override
   void initState() {
     // TODO: implement initState
-    Future.delayed(
-      const Duration(seconds: 1),
-      () {
-        context.read<ContributorsProvider>().getContributorsDetail(repositoryFullName: widget.repositoryFullName);
-      },
-    );
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ContributorsProvider>().getContributorsDetail(
+            repositoryFullName: widget.repositoryFullName,
+          );
+    });
   }
 
   CarouselSlider _createCarouselSlider({

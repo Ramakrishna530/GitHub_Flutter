@@ -41,6 +41,13 @@ class RepositoryDetailsScreen extends StatelessWidget {
           children: [
             Image(
               image: NetworkImage(repositoryResponse.owner.avatarUrl),
+              errorBuilder: (context, object, stackTrace) => const Image(
+                height: 200,
+                width: double.infinity,
+                image: AssetImage(
+                  "assets/images/img_error.png",
+                ),
+              ),
               width: double.infinity,
               height: 200,
               fit: BoxFit.cover,
