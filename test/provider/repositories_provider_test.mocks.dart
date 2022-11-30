@@ -7,7 +7,8 @@ import 'dart:async' as _i3;
 
 import 'package:git_hub/models/get_repositories/repository_response.dart'
     as _i4;
-import 'package:git_hub/repository/get_repositories_repo.dart' as _i2;
+import 'package:git_hub/repository/get_repositories/get_repositories_interface.dart'
+    as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
 // ignore_for_file: type=lint

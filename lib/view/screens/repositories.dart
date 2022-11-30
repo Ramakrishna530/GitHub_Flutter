@@ -5,21 +5,9 @@ import '../../provider/repositories_provider.dart';
 import '../widget/drop_down.dart';
 import '../widget/repositories_list_widget.dart';
 
-class Repositories extends StatelessWidget {
-  const Repositories({super.key});
-
-  static const routeName = "/repositories";
-
-  @override
-  Widget build(BuildContext context) => ListenableProvider<RepositoriesProvider>.value(
-        value: RepositoriesProviderImpl(),
-        child: const RepositoriesScreen(),
-      );
-}
-
 class RepositoriesScreen extends StatefulWidget {
   const RepositoriesScreen({super.key});
-
+  static const routeName = "/repositories_screen";
   @override
   State<RepositoriesScreen> createState() => _RepositoriesScreenState();
 }

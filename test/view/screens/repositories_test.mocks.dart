@@ -64,6 +64,13 @@ class MockRepositoriesProvider extends _i1.Mock
         returnValueForMissingStub: _i5.Future<void>.value(),
       ) as _i5.Future<void>);
   @override
+  _i4.RepositoryResponse? getRepositoryResponseBy({required int? id}) =>
+      (super.noSuchMethod(Invocation.method(
+        #getRepositoryResponseBy,
+        [],
+        {#id: id},
+      )) as _i4.RepositoryResponse?);
+  @override
   void addListener(_i6.VoidCallback? listener) => super.noSuchMethod(
         Invocation.method(
           #addListener,

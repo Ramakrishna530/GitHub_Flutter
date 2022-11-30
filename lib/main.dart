@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import 'provider/repositories_provider.dart';
 import 'view/screens/repositories.dart';
+import 'view/screens/repository_details.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ListenableProvider<RepositoriesProvider>.value(
+      value: RepositoriesProviderImpl(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -24,15 +32,19 @@ class MyApp extends StatelessWidget {
           // or simply save your changes to "hot reload" in a Flutter IDE).
           // Notice that the counter didn't reset back to zero; the application
           // is not restarted.
-          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink).copyWith(secondary: Colors.amber),
+          colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.pink).copyWith(
+            secondary: Colors.amber,
+          ),
           canvasColor: const Color.fromRGBO(255, 254, 229, 1),
           fontFamily: "Raleway",
           textTheme: ThemeData.light().textTheme.copyWith(
                 bodyText1: const TextStyle(
                   color: Color.fromRGBO(20, 51, 51, 1),
+                  fontFamily: "RobotoCondensed",
                 ),
                 bodyText2: const TextStyle(
                   color: Color.fromRGBO(20, 51, 51, 1),
+                  fontFamily: "RobotoCondensed",
                 ),
                 headline6: const TextStyle(
                   fontSize: 20,
@@ -41,9 +53,10 @@ class MyApp extends StatelessWidget {
                 ),
               ),
         ),
-        initialRoute: Repositories.routeName,
+        initialRoute: RepositoriesScreen.routeName,
         routes: {
-          Repositories.routeName: (context) => const Repositories(),
+          RepositoriesScreen.routeName: (context) => const RepositoriesScreen(),
+          RepositoryDetails.routeName: (context) => const RepositoryDetails(),
         },
       );
 }

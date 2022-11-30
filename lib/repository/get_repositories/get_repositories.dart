@@ -1,11 +1,8 @@
-import '../core/http/http_service.dart';
-import '../models/get_repositories/repositories_response.dart';
-import '../models/get_repositories/repository_response.dart';
-import 'service_constants.dart';
-
-abstract class GetRepositoriesRepo {
-  Future<List<RepositoryResponse>> getRepositories({required String language});
-}
+import '../../core/http/http_service.dart';
+import '../../models/get_repositories/repositories_response.dart';
+import '../../models/get_repositories/repository_response.dart';
+import '../service_constants.dart';
+import 'get_repositories_interface.dart';
 
 class GetRepositoriesRepoImpl implements GetRepositoriesRepo {
   GetRepositoriesRepoImpl({HttpService? httpService}) : httpService = httpService ?? HttpServiceImpl();
