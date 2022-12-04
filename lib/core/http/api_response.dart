@@ -11,7 +11,7 @@ class ApiResponse<T> {
 
   ApiResponse({required this.status, this.data, this.message});
 
-  ApiResponse.loading() : status = ApiStatus.loading;
+  ApiResponse.loading(this.message) : status = ApiStatus.loading;
 
   ApiResponse.completed(this.data) : status = ApiStatus.completed;
 

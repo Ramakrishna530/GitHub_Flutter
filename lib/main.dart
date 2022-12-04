@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
+import 'package:redux_thunk/redux_thunk.dart';
 
-import 'provider/repositories_provider.dart';
+import 'state/app_state.dart';
+import 'state/reducer.dart';
 import 'view/screens/repositories.dart';
 import 'view/screens/repository_details.dart';
 
 void main() {
+  final store = Store<AppState>(
+    reducer,
+    initialState: AppState.initialState(),
+    middleware: [thunkMiddleware],
+  );
   runApp(
-    ListenableProvider<RepositoriesProvider>.value(
-      value: RepositoriesProviderImpl(),
+    StoreProvider<AppState>(
+      store: store,
       child: const MyApp(),
     ),
   );
@@ -56,7 +64,7 @@ class MyApp extends StatelessWidget {
         initialRoute: RepositoriesScreen.routeName,
         routes: {
           RepositoriesScreen.routeName: (context) => const RepositoriesScreen(),
-          RepositoryDetails.routeName: (context) => const RepositoryDetails(),
+          RepositoryDetailsScreen.routeName: (context) => const RepositoryDetailsScreen(),
         },
       );
 }

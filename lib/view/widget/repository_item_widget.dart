@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
+import '../../state/actions.dart';
+import '../../state/app_state.dart';
 import '../screens/repository_details.dart';
 
 class RepositoryItemWidget extends StatelessWidget {
@@ -17,11 +20,10 @@ class RepositoryItemWidget extends StatelessWidget {
   final int watchersCount;
 
   void _didSelect(BuildContext context) {
-    Navigator.pushNamed(
-      context,
-      RepositoryDetails.routeName,
-      arguments: id,
+    StoreProvider.of<AppState>(context).dispatch(
+      SetSelectedRepositoryAction(repositoryID: id),
     );
+    Navigator.pushNamed(context, RepositoryDetailsScreen.routeName);
   }
 
   @override
