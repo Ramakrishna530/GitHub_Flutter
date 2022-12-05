@@ -10,7 +10,7 @@ import 'view/screens/repository_details.dart';
 
 void main() {
   final store = Store<AppState>(
-    reducer,
+    appReducer,
     initialState: AppState.initialState(),
     middleware: [thunkMiddleware],
   );

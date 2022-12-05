@@ -1,3 +1,5 @@
+import 'package:redux/redux.dart';
+
 import '../core/http/api_response.dart';
 import '../models/contributors/contributor.dart';
 import '../models/contributors/contributor_response.dart';
@@ -5,55 +7,78 @@ import '../models/user_details/user_details_response.dart';
 import 'actions.dart';
 import 'app_state.dart';
 
-AppState reducer(AppState previousState, Object? action) {
-  if (action is GetRepositoriesLoadingAction) {
-    return previousState.copyWith(
+final appReducer = combineReducers<AppState>([
+  TypedReducer<AppState, GetRepositoriesLoadingAction>(_getRepositoriesLoading),
+  TypedReducer<AppState, GetRepositoriesSuccessAction>(_getRepositoriesSuccess),
+  TypedReducer<AppState, GetRepositoriesFailedAction>(_getRepositoriesFailed),
+  TypedReducer<AppState, SetSelectedRepositoryAction>(_setSelectedRepository),
+  TypedReducer<AppState, GetContributorsLoadingAction>(_getContributorsLoading),
+  TypedReducer<AppState, GetContributorsSuccessAction>(_getContributorsSuccess),
+  TypedReducer<AppState, GetContributorsFailedAction>(_getContributorsFailed),
+]);
+
+AppState _getRepositoriesLoading(
+  AppState appState,
+  GetRepositoriesLoadingAction action,
+) =>
+    appState.copyWith(
       repositoriesState: ApiResponse.loading(action.message),
     );
-  }
 
-  if (action is GetRepositoriesSuccessAction) {
-    return previousState.copyWith(
+AppState _getRepositoriesSuccess(
+  AppState appState,
+  GetRepositoriesSuccessAction action,
+) =>
+    appState.copyWith(
       repositoriesState: ApiResponse.completed(action.repositories),
     );
-  }
 
-  if (action is GetRepositoriesFailedAction) {
-    return previousState.copyWith(
+AppState _getRepositoriesFailed(
+  AppState appState,
+  GetRepositoriesFailedAction action,
+) =>
+    appState.copyWith(
       repositoriesState: ApiResponse.error(action.errorMessage),
     );
-  }
 
-  if (action is SetSelectedRepositoryAction) {
-    final selectedRepository = previousState.repositoriesState.data?.firstWhere(
-      (repository) => repository.id == action.repositoryID,
-    );
-    return previousState.copyWith(selectedRepository: selectedRepository);
-  }
+AppState _setSelectedRepository(
+  AppState appState,
+  SetSelectedRepositoryAction action,
+) {
+  final selectedRepository = appState.repositoriesState.data?.firstWhere(
+    (repository) => repository.id == action.repositoryID,
+  );
+  return appState.copyWith(selectedRepository: selectedRepository);
+}
 
-  if (action is GetContributorsLoadingAction) {
-    return previousState.copyWith(
+AppState _getContributorsLoading(
+  AppState appState,
+  GetContributorsLoadingAction action,
+) =>
+    appState.copyWith(
       contributorsState: ApiResponse.loading(action.message),
     );
-  }
 
-  if (action is GetContributorsSuccessAction) {
-    final contributors = _createContributors(
-      action.usersDetailsResponse,
-      action.contributorsResponse,
-    );
-    return previousState.copyWith(
-      contributorsState: ApiResponse.completed(contributors),
-    );
-  }
+AppState _getContributorsSuccess(
+  AppState appState,
+  GetContributorsSuccessAction action,
+) {
+  final contributors = _createContributors(
+    action.usersDetailsResponse,
+    action.contributorsResponse,
+  );
+  return appState.copyWith(
+    contributorsState: ApiResponse.completed(contributors),
+  );
+}
 
-  if (action is GetContributorsFailedAction) {
-    return previousState.copyWith(
+AppState _getContributorsFailed(
+  AppState appState,
+  GetContributorsFailedAction action,
+) =>
+    appState.copyWith(
       contributorsState: ApiResponse.error(action.errorMessage),
     );
-  }
-  return previousState;
-}
 
 List<Contributor> _createContributors(
   List<UserDetailsResponse> userDetailsResponse,
