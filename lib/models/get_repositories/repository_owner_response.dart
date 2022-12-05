@@ -1,10 +1,15 @@
+import 'package:flutter/cupertino.dart';
+import 'package:functional_data/functional_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'repository_owner_response.g.dart';
+// ignore_for_file: annotate_overrides
 
+@immutable
 @JsonSerializable(fieldRename: FieldRename.snake)
-class RepositoryOwnerResponse {
-  RepositoryOwnerResponse({
+@FunctionalData()
+class RepositoryOwnerResponse extends $RepositoryOwnerResponse {
+  const RepositoryOwnerResponse({
     required this.avatarUrl,
   });
 

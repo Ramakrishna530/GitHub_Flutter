@@ -7,15 +7,17 @@ import '../models/user_details/user_details_response.dart';
 import 'actions.dart';
 import 'app_state.dart';
 
-final appReducer = combineReducers<AppState>([
-  TypedReducer<AppState, GetRepositoriesLoadingAction>(_getRepositoriesLoading),
-  TypedReducer<AppState, GetRepositoriesSuccessAction>(_getRepositoriesSuccess),
-  TypedReducer<AppState, GetRepositoriesFailedAction>(_getRepositoriesFailed),
-  TypedReducer<AppState, SetSelectedRepositoryAction>(_setSelectedRepository),
-  TypedReducer<AppState, GetContributorsLoadingAction>(_getContributorsLoading),
-  TypedReducer<AppState, GetContributorsSuccessAction>(_getContributorsSuccess),
-  TypedReducer<AppState, GetContributorsFailedAction>(_getContributorsFailed),
-]);
+final appReducer = combineReducers<AppState>(
+  [
+    TypedReducer<AppState, GetRepositoriesLoadingAction>(_getRepositoriesLoading),
+    TypedReducer<AppState, GetRepositoriesSuccessAction>(_getRepositoriesSuccess),
+    TypedReducer<AppState, GetRepositoriesFailedAction>(_getRepositoriesFailed),
+    TypedReducer<AppState, SetSelectedRepositoryAction>(_setSelectedRepository),
+    TypedReducer<AppState, GetContributorsLoadingAction>(_getContributorsLoading),
+    TypedReducer<AppState, GetContributorsSuccessAction>(_getContributorsSuccess),
+    TypedReducer<AppState, GetContributorsFailedAction>(_getContributorsFailed),
+  ],
+);
 
 AppState _getRepositoriesLoading(
   AppState appState,

@@ -29,8 +29,9 @@ class RepositoriesListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => StoreConnector<AppState, ApiResponse<List<RepositoryResponse>>>(
         converter: (Store<AppState> store) => store.state.repositoriesState,
+        distinct: true,
         builder: (BuildContext context, repositoriesState) {
-          print("Rebuild called $RepositoriesListWidget");
+          print("Rebuild called $RepositoriesListWidget with Status ${repositoriesState.status}");
           switch (repositoriesState.status) {
             case ApiStatus.loading:
               return LoadingWidget(message: repositoriesState.message!);
