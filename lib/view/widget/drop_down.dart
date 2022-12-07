@@ -2,8 +2,8 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+import '../../state/actions.dart';
 import '../../state/app_state.dart';
-import '../../state/middleware.dart';
 
 class DropDown extends StatefulWidget {
   const DropDown({
@@ -26,7 +26,9 @@ class _DropDownState extends State<DropDown> {
     super.initState();
     selectedDropDownValue = widget.dropdownValue;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      StoreProvider.of<AppState>(context).dispatch(getRepositories(language: selectedDropDownValue));
+      StoreProvider.of<AppState>(context).dispatch(
+        GetRepositoriesLoadingAction(language: selectedDropDownValue),
+      );
     });
   }
 
@@ -34,7 +36,9 @@ class _DropDownState extends State<DropDown> {
     setState(() {
       selectedDropDownValue = item;
     });
-    StoreProvider.of<AppState>(context).dispatch(getRepositories(language: selectedDropDownValue));
+    StoreProvider.of<AppState>(context).dispatch(
+      GetRepositoriesLoadingAction(language: selectedDropDownValue),
+    );
   }
 
   @override

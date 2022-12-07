@@ -11,9 +11,9 @@ part 'actions.g.dart';
 
 @immutable
 class GetRepositoriesLoadingAction {
-  const GetRepositoriesLoadingAction({required this.message});
+  const GetRepositoriesLoadingAction({required this.language});
 
-  final String message;
+  final String language;
 }
 
 @immutable
@@ -43,9 +43,17 @@ class SetSelectedRepositoryAction extends $SetSelectedRepositoryAction {
 @immutable
 @FunctionalData()
 class GetContributorsLoadingAction extends $GetContributorsLoadingAction {
-  const GetContributorsLoadingAction({required this.message});
+  const GetContributorsLoadingAction({required this.repositoryFullName});
 
-  final String message;
+  final String repositoryFullName;
+}
+
+@immutable
+@FunctionalData()
+class GetUsersDetailsLoadingAction extends $GetUsersDetailsLoadingAction {
+  const GetUsersDetailsLoadingAction({required this.contributorsResponse});
+
+  final List<ContributorResponse> contributorsResponse;
 }
 
 @immutable

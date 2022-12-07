@@ -184,56 +184,121 @@ class SetSelectedRepositoryAction$ {
 abstract class $GetContributorsLoadingAction {
   const $GetContributorsLoadingAction();
 
-  String get message;
+  String get repositoryFullName;
 
   GetContributorsLoadingAction copyWith({
-    String? message,
+    String? repositoryFullName,
   }) =>
       GetContributorsLoadingAction(
-        message: message ?? this.message,
+        repositoryFullName: repositoryFullName ?? this.repositoryFullName,
       );
 
   GetContributorsLoadingAction copyUsing(
       void Function(GetContributorsLoadingAction$Change change) mutator) {
     final change = GetContributorsLoadingAction$Change._(
-      this.message,
+      this.repositoryFullName,
     );
     mutator(change);
     return GetContributorsLoadingAction(
-      message: change.message,
+      repositoryFullName: change.repositoryFullName,
     );
   }
 
   @override
-  String toString() => "GetContributorsLoadingAction(message: $message)";
+  String toString() =>
+      "GetContributorsLoadingAction(repositoryFullName: $repositoryFullName)";
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   bool operator ==(Object other) =>
       other is GetContributorsLoadingAction &&
       other.runtimeType == runtimeType &&
-      message == other.message;
+      repositoryFullName == other.repositoryFullName;
 
   @override
   // ignore: avoid_equals_and_hash_code_on_mutable_classes
   int get hashCode {
-    return message.hashCode;
+    return repositoryFullName.hashCode;
   }
 }
 
 class GetContributorsLoadingAction$Change {
   GetContributorsLoadingAction$Change._(
-    this.message,
+    this.repositoryFullName,
   );
 
-  String message;
+  String repositoryFullName;
 }
 
 // ignore: avoid_classes_with_only_static_members
 class GetContributorsLoadingAction$ {
-  static final message = Lens<GetContributorsLoadingAction, String>(
-    (messageContainer) => messageContainer.message,
-    (messageContainer, message) => messageContainer.copyWith(message: message),
+  static final repositoryFullName = Lens<GetContributorsLoadingAction, String>(
+    (repositoryFullNameContainer) =>
+        repositoryFullNameContainer.repositoryFullName,
+    (repositoryFullNameContainer, repositoryFullName) =>
+        repositoryFullNameContainer.copyWith(
+            repositoryFullName: repositoryFullName),
+  );
+}
+
+abstract class $GetUsersDetailsLoadingAction {
+  const $GetUsersDetailsLoadingAction();
+
+  List<ContributorResponse> get contributorsResponse;
+
+  GetUsersDetailsLoadingAction copyWith({
+    List<ContributorResponse>? contributorsResponse,
+  }) =>
+      GetUsersDetailsLoadingAction(
+        contributorsResponse: contributorsResponse ?? this.contributorsResponse,
+      );
+
+  GetUsersDetailsLoadingAction copyUsing(
+      void Function(GetUsersDetailsLoadingAction$Change change) mutator) {
+    final change = GetUsersDetailsLoadingAction$Change._(
+      this.contributorsResponse,
+    );
+    mutator(change);
+    return GetUsersDetailsLoadingAction(
+      contributorsResponse: change.contributorsResponse,
+    );
+  }
+
+  @override
+  String toString() =>
+      "GetUsersDetailsLoadingAction(contributorsResponse: $contributorsResponse)";
+
+  @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  bool operator ==(Object other) =>
+      other is GetUsersDetailsLoadingAction &&
+      other.runtimeType == runtimeType &&
+      contributorsResponse == other.contributorsResponse;
+
+  @override
+  // ignore: avoid_equals_and_hash_code_on_mutable_classes
+  int get hashCode {
+    return contributorsResponse.hashCode;
+  }
+}
+
+class GetUsersDetailsLoadingAction$Change {
+  GetUsersDetailsLoadingAction$Change._(
+    this.contributorsResponse,
+  );
+
+  List<ContributorResponse> contributorsResponse;
+}
+
+// ignore: avoid_classes_with_only_static_members
+class GetUsersDetailsLoadingAction$ {
+  static final contributorsResponse =
+      Lens<GetUsersDetailsLoadingAction, List<ContributorResponse>>(
+    (contributorsResponseContainer) =>
+        contributorsResponseContainer.contributorsResponse,
+    (contributorsResponseContainer, contributorsResponse) =>
+        contributorsResponseContainer.copyWith(
+            contributorsResponse: contributorsResponse),
   );
 }
 

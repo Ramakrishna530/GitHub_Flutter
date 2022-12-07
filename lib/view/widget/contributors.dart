@@ -5,8 +5,8 @@ import 'package:redux/redux.dart';
 
 import '../../core/http/api_response.dart';
 import '../../models/contributors/contributor.dart';
+import '../../state/actions.dart';
 import '../../state/app_state.dart';
-import '../../state/middleware.dart';
 import 'app_error_widget.dart';
 import 'contributor_item_widget.dart';
 import 'loading_widget.dart';
@@ -22,12 +22,11 @@ class ContributorsWidget extends StatefulWidget {
 class _ContributorsWidgetState extends State<ContributorsWidget> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      StoreProvider.of<AppState>(context).dispatch(getContributorsDetail(
-        repositoryFullName: widget.repositoryFullName,
-      ));
+      StoreProvider.of<AppState>(context).dispatch(
+        GetContributorsLoadingAction(repositoryFullName: widget.repositoryFullName),
+      );
     });
   }
 

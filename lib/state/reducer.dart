@@ -24,7 +24,7 @@ AppState _getRepositoriesLoading(
   GetRepositoriesLoadingAction action,
 ) =>
     appState.copyWith(
-      repositoriesState: ApiResponse.loading(action.message),
+      repositoriesState: ApiResponse.loading("Loading Repositories for ${action.language}"),
     );
 
 AppState _getRepositoriesSuccess(
@@ -58,7 +58,7 @@ AppState _getContributorsLoading(
   GetContributorsLoadingAction action,
 ) =>
     appState.copyWith(
-      contributorsState: ApiResponse.loading(action.message),
+      contributorsState: ApiResponse.loading("Loading Contributors..."),
     );
 
 AppState _getContributorsSuccess(

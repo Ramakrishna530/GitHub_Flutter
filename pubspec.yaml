@@ -42,7 +42,6 @@ dependencies:
   json_annotation: ^4.7.0
   provider: ^6.0.4
   redux: ^5.0.0
-  redux_thunk: ^0.4.0
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to
