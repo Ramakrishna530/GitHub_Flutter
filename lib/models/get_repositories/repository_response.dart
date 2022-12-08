@@ -1,13 +1,18 @@
+import 'package:flutter/cupertino.dart';
+import 'package:functional_data/functional_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'repository_license_response.dart';
 import 'repository_owner_response.dart';
 
 part 'repository_response.g.dart';
+// ignore_for_file: annotate_overrides
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class RepositoryResponse {
-  RepositoryResponse({
+@immutable
+@FunctionalData()
+class RepositoryResponse extends $RepositoryResponse {
+  const RepositoryResponse({
     required this.id,
     required this.name,
     required this.fullName,

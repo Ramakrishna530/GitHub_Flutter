@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:redux/redux.dart';
 
 import '../../core/http/api_response.dart';
-import '../../provider/contributor.dart';
-import '../../provider/contributors_provider.dart';
+import '../../models/contributors/contributor.dart';
+import '../../state/actions.dart';
+import '../../state/app_state.dart';
 import 'app_error_widget.dart';
 import 'contributor_item_widget.dart';
 import 'loading_widget.dart';
@@ -20,12 +22,11 @@ class ContributorsWidget extends StatefulWidget {
 class _ContributorsWidgetState extends State<ContributorsWidget> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ContributorsProvider>().getContributorsDetail(
-            repositoryFullName: widget.repositoryFullName,
-          );
+      StoreProvider.of<AppState>(context).dispatch(
+        GetContributorsLoadingAction(repositoryFullName: widget.repositoryFullName),
+      );
     });
   }
 
@@ -55,15 +56,16 @@ class _ContributorsWidgetState extends State<ContributorsWidget> {
       );
 
   @override
-  Widget build(BuildContext context) {
-    final contributorProvider = context.watch<ContributorsProvider>();
-    switch (contributorProvider.contributors.status) {
-      case ApiStatus.loading:
-        return const LoadingWidget();
-      case ApiStatus.error:
-        return AppErrorWidget(contributorProvider.contributors.message!);
-      case ApiStatus.completed:
-        return _createCarouselSlider(contributors: contributorProvider.contributors.data!);
-    }
-  }
+  Widget build(BuildContext context) => StoreConnector<AppState, ApiResponse<List<Contributor>>>(
+      converter: (Store<AppState> store) => store.state.contributorsState,
+      builder: (_, contributorsState) {
+        switch (contributorsState.status) {
+          case ApiStatus.loading:
+            return LoadingWidget(message: contributorsState.message!);
+          case ApiStatus.error:
+            return AppErrorWidget(message: contributorsState.message!);
+          case ApiStatus.completed:
+            return _createCarouselSlider(contributors: contributorsState.data!);
+        }
+      });
 }
