@@ -10,7 +10,6 @@ void getContributorsMiddleware({
   required UserDetailsRepository userDetailsRepository,
 }) {
   if (action is GetContributorsLoadingAction) {
-    GetContributorsLoadingAction(repositoryFullName: action.repositoryFullName);
     // Get Contributors for the repository
     contributorsRepository
         .getContributors(
@@ -37,12 +36,5 @@ void getContributorsMiddleware({
     }).onError((error, stackTrace) {
       dispatcher(GetContributorsFailedAction(errorMessage: error.toString()));
     });
-  } else if (action is GetContributorsSuccessAction) {
-    GetContributorsSuccessAction(
-      contributorsResponse: action.contributorsResponse,
-      usersDetailsResponse: action.usersDetailsResponse,
-    );
-  } else if (action is GetContributorsFailedAction) {
-    GetContributorsFailedAction(errorMessage: action.errorMessage);
   }
 }

@@ -8,7 +8,6 @@ void getRepositoriesMiddleware({
   required GetRepositoriesRepo getRepositoriesRepo,
 }) {
   if (action is GetRepositoriesLoadingAction) {
-    GetRepositoriesLoadingAction(language: action.language);
     getRepositoriesRepo
         .getRepositories(
       language: action.language,
@@ -18,9 +17,5 @@ void getRepositoriesMiddleware({
     }).onError((error, stackTrace) {
       dispatcher(GetRepositoriesFailedAction(errorMessage: error.toString()));
     });
-  } else if (action is GetRepositoriesSuccessAction) {
-    GetRepositoriesSuccessAction(repositories: action.repositories);
-  } else if (action is GetRepositoriesFailedAction) {
-    GetRepositoriesFailedAction(errorMessage: action.errorMessage);
   }
 }
