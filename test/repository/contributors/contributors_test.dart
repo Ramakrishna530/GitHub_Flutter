@@ -5,7 +5,7 @@ import 'package:git_hub/repository/contributors/contributors.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../helpers/mock_json_data.dart';
-import '../../mocks/http_service.mocks.dart';
+import '../../mocks/test_mocks.mocks.dart';
 
 void main() {
   late ContributorsRepositoryImpl contributorsRepositoryImpl;

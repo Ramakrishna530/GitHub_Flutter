@@ -11,15 +11,21 @@ void getContributorsMiddleware({
 }) {
   if (action is GetContributorsLoadingAction) {
     // Get Contributors for the repository
-    contributorsRepository
-        .getContributors(
-      repositoryFullName: action.repositoryFullName,
-    )
-        .then((contributors) {
-      dispatcher(GetUsersDetailsLoadingAction(contributorsResponse: contributors));
-    }).onError((error, stackTrace) {
-      dispatcher(GetContributorsFailedAction(errorMessage: error.toString()));
-    });
+    contributorsRepository.getContributors(repositoryFullName: action.repositoryFullName).then(
+      (contributors) {
+        dispatcher(
+          GetUsersDetailsLoadingAction(contributorsResponse: contributors),
+        );
+      },
+    ).onError(
+      (error, stackTrace) {
+        dispatcher(
+          GetContributorsFailedAction(
+            errorMessage: error.toString(),
+          ),
+        );
+      },
+    );
   } else if (action is GetUsersDetailsLoadingAction) {
     // Create Future for getting user details of each contributor
     final userDetailsFutures =
@@ -27,14 +33,17 @@ void getContributorsMiddleware({
               url: contributorResponse.url,
             ));
     // get the users details
-    Future.wait(userDetailsFutures).then((usersDetailsResponse) {
-      print("usersDetailsResponse Success");
-      dispatcher(GetContributorsSuccessAction(
-        contributorsResponse: action.contributorsResponse,
-        usersDetailsResponse: usersDetailsResponse,
-      ));
-    }).onError((error, stackTrace) {
-      dispatcher(GetContributorsFailedAction(errorMessage: error.toString()));
+    Future.wait(userDetailsFutures).then(
+      (usersDetailsResponse) {
+        dispatcher(GetContributorsSuccessAction(
+          contributorsResponse: action.contributorsResponse,
+          usersDetailsResponse: usersDetailsResponse,
+        ));
+      },
+    ).onError((error, stackTrace) {
+      dispatcher(
+        GetContributorsFailedAction(errorMessage: error.toString()),
+      );
     });
   }
 }

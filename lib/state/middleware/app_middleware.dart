@@ -11,8 +11,8 @@ import '../../util/dispatcher.dart';
 import 'get_contributors_middleware.dart';
 import 'get_repositories_middleware.dart';
 
-class GithubMiddleware {
-  GithubMiddleware({
+class AppMiddleware {
+  AppMiddleware({
     GetRepositoriesRepo? getRepositoriesRepo,
     ContributorsRepository? contributorsRepository,
     UserDetailsRepository? userDetailsRepository,
