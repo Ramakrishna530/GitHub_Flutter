@@ -30,12 +30,9 @@ class _RepositoriesScreenState extends State<RepositoriesScreen> {
   void initState() {
     super.initState();
     _selectedLanguage = _languages[0];
-    Future.delayed(
-      const Duration(seconds: 1),
-      () {
-        context.read<RepositoriesProvider>().getRepositories(language: _selectedLanguage);
-      },
-    );
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      context.read<RepositoriesProvider>().getRepositories(language: _selectedLanguage);
+    });
   }
 
   void _didSelect({required String item}) {
