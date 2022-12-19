@@ -6,17 +6,17 @@ import 'package:git_hub/repository/service_constants.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../helpers/mock_json_data.dart';
-import '../../mocks/http_service.mocks.dart';
+import '../../mocks/test_mocks.mocks.dart';
 
 void main() {
   late GetRepositoriesRepoImpl getRepositoriesRepoImpl;
-  late MockHttpService httpServiceTest;
+  late MockHttpService httpService;
   const language = "Dart";
   final uri = Uri.parse("$baseURL/search/repositories?q=language:$language&sort"
       "=stars&order=desc");
   setUp(() {
-    httpServiceTest = MockHttpService();
-    getRepositoriesRepoImpl = GetRepositoriesRepoImpl(httpService: httpServiceTest);
+    httpService = MockHttpService();
+    getRepositoriesRepoImpl = GetRepositoriesRepoImpl(httpService: httpService);
   });
 
   group("When the get repositories is success", () {
@@ -26,7 +26,7 @@ void main() {
         jsonPath: JsonFile.repositories.path,
       ) as Map<String, dynamic>;
       when(
-        httpServiceTest.getResponse(uri),
+        httpService.getResponse(uri),
       ).thenAnswer((_) async => repositoriesJson);
       repositories = await getRepositoriesRepoImpl.getRepositories(
         language: language,
@@ -40,7 +40,7 @@ void main() {
 
   group("When the get repositories is failed with exception", () {
     setUp(() async {
-      when(httpServiceTest.getResponse(uri)).thenThrow(FetchDataException());
+      when(httpService.getResponse(uri)).thenThrow(FetchDataException());
     });
 
     test('then throws the correct exception', () async {

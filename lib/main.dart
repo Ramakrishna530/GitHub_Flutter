@@ -3,7 +3,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:redux/redux.dart';
 
 import 'state/app_state.dart';
-import 'state/middleware/github_middleware.dart';
+import 'state/middleware/app_middleware.dart';
 import 'state/reducer.dart';
 import 'view/screens/repositories.dart';
 import 'view/screens/repository_details.dart';
@@ -12,7 +12,7 @@ void main() {
   final store = Store<AppState>(
     appReducer,
     initialState: AppState.initialState(),
-    middleware: GithubMiddleware().middlewares(),
+    middleware: AppMiddleware().middlewares(),
   );
   runApp(
     StoreProvider<AppState>(

@@ -5,7 +5,7 @@ import 'package:git_hub/repository/user_details/user_details.dart';
 import 'package:mockito/mockito.dart';
 
 import '../../helpers/mock_json_data.dart';
-import '../../mocks/http_service.mocks.dart';
+import '../../mocks/test_mocks.mocks.dart';
 
 void main() {
   late UserDetailsRepositoryImpl userDetailsRepositoryImpl;
